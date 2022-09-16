@@ -1,0 +1,8 @@
+deep_translator~=1.8.3
+nltk~=3.7
+pandas~=1.4.3
+tensorflow==2.9.1
+tensorflow-addons~=0.17.1
+pipreqs~=0.4.11
+nbconvert~=6.5.0
+scrapy

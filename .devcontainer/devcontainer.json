@@ -1,0 +1,8 @@
+{
+    "name": "Tensorflow container",
+    "context": "..",
+    "dockerFile": "../Dockerfile",
+    "extensions": [
+        "ms-python.python"
+    ]
+}

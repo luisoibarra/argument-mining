@@ -1,0 +1,20 @@
+# COMMON PYHTON IGNORES
+
+__pycache__
+.pytest_cache
+.ipynb_checkpoints
+
+# VSCode 
+
+.vscode
+
+# EXTERNAL TOOLS
+
+align/fast_align
+align/awesome-align
+brat/
+
+# OTHER
+
+trash/
+TODO.md
