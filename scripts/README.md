@@ -27,3 +27,5 @@ Folder containing helper scripts to install or run the tools used.
 - `process_sentence_corpus.sh`: Process a sentence like corpus from raw corpus to projection
 - `run_brat.sh`: Run brat server
 - `run_docker_container.sh`: Run jupyter notebook on a docker container.
+- `train_link_predictor.sh`: Train the link prediction model
+- `train_segmenter.sh`: Train the argument segmenter model

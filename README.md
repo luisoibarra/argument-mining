@@ -46,13 +46,19 @@ The repository supports the Development Container feature for Visual Studio Code
 
 ## Basic Usage
 
+Some python modules are generated from jupyter notebooks. **Never** touch this modules, instead modify the notebook according your needs. For example, `link_prediction/models/link_prediction.ipynb` generates `link_prediction/models/link_prediction.py`, the modules are generated to avoid boilerplate code and be able to import the functions in the notebooks.
+
 ### Training
 
 This package doesn't come with trained models. To train the models the repository comes with a [corpus](https://tudatalib.ulb.tu-darmstadt.de/handle/tudatalib/2422) splitted in train, dev and test, also a much smaller dataset is present just to quickly verify that all is in order. To change dataset in the notebooks change the `INFO_TAG` variable to the corpus name.
 
 1. Go to `scripts/` and run `./process_paragraph_corpus.sh persuasive_essays_paragraph` to create the corpus projection.
-2. Open `segmenter/models/segmenter.ipynb` and run the cells needed for training and saving the model. The model hyperparameters can be changed here.
-3. Open `link_prediction/models/link_prediction.ipynb` and run the cells needed for training and saving the model. The model hyperparameters can be changed here.
+2. Train segmenter model:
+  - Open `segmenter/models/segmenter.ipynb` and run the cells needed for training and saving the model. (Recomended)
+  - Run `./train_segmenter.sh`.
+3. Train link predictor model:
+  - Open `link_prediction/models/link_prediction.ipynb` and run the cells needed for training and saving the model. (Recomended)
+  - Run `./train_link_predictor.sh`
 
 ### Classify and extract argument segmentation and link prediction
 

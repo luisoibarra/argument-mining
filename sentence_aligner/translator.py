@@ -124,7 +124,9 @@ class BaseDeepTranslator(Translator):
         self.cache_file = cache_file
         if not cache_file:
             self.cache_file = Path(__file__, "..", "..", "data", "translation", "translation_cache.json").resolve()
-
+            if not self.cache_file.exists():
+                (self.cache_file / "..").resolve().mkdir(parents=True, exist_ok=True)
+                self.cache_file.touch()
         # target_sentence = self.cache_dict[source_language][source_sentence][target_language]
         self.cache_dict: Dict[str, Dict[str, Dict[str, str]]] = {}
     

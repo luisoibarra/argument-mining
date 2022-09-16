@@ -39,13 +39,19 @@ optional_args = [
         help="Max threads active that can have the process",
         type=int,
         default=None
-    )
+    ),
+    OptionalArg(
+        name="file_batch",
+        help="How many files to create a batch",
+        type=int,
+        default=30
+    ),
 ]
 
 def create_from_args(args) -> Aligner:
     aligner = {
-        "fast_align": FastAlignAligner(args.max_worker), 
-        "awesome_align": AwesomeAlignAligner(args.max_worker), 
+        "fast_align": FastAlignAligner(args.max_worker, file_batch=args.file_batch), 
+        "awesome_align": AwesomeAlignAligner(args.max_worker, file_batch=args.file_batch), 
     }[args.aligner]
     return aligner
 

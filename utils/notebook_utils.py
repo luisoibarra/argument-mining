@@ -13,6 +13,7 @@ def export_notebook_as_module(notebook_path: Path, new_params: dict = None, new_
     param_dict_name: Name of the parameter dictionary in the notebook
     """
     new_params = {} if new_params is None else new_params
+    new_cap_variables = {} if new_cap_variables is None else new_cap_variables
     
     exporter = PythonExporter()
     content, _ = exporter.from_file(notebook_path.open())

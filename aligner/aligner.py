@@ -10,8 +10,9 @@ class Aligner:
     Abstract class that makes the bidirectional alignment.
     """
     
-    def __init__(self, max_worker: Optional[int] = 20) -> None:
-        self.max_worker = max_worker
+    def __init__(self, max_worker: Optional[int] = 10, file_batch: int = 30) -> None:
+        self.max_worker = max_worker if max_worker else 10
+        self.file_batch = file_batch
     
     def bidirectional_align_dir(self, sentence_alignment_dir: Path, align_dest: Path, **kwargs):
         """
@@ -25,7 +26,25 @@ class Aligner:
         if not align_dest.exists(): align_dest.mkdir(exist_ok=True, parents=True)
         
         sentences_aligned = [x for x in sentence_alignment_dir.iterdir()]
-
+        
+        # Batch files
+        batch_sentences_aligned = [[sentences_aligned[base + i] for i in range(self.file_batch) if base + i < len(sentences_aligned)] for base in range(0, len(sentences_aligned), self.file_batch)]
+        batch_sentences_separators = {}
+        for i, file_batch in enumerate(batch_sentences_aligned):
+            batch_temp_file = (file_batch[0] / ".." / f"temp_batch{i}.align").resolve()
+            # File separators
+            current_separators = [0]
+            with batch_temp_file.open("w") as batch_file:
+                # Add all sentences in the batch into a single file
+                for file in file_batch:
+                    lines = [line for line in file.read_text().splitlines() if line]
+                    current_separators.append(current_separators[-1] + len(lines))
+                    batch_file.write("\n".join(lines))
+                    batch_file.write("\n")
+            batch_sentences_separators[batch_temp_file] = current_separators, file_batch
+        
+        sentences_aligned = list(batch_sentences_separators)
+        
         batch = len(sentences_aligned)//self.max_worker + 1
         
         def batch_work(slice: int) -> str:
@@ -33,11 +52,24 @@ class Aligner:
                 if file.is_file() and file.name.endswith(".align"):
                     dest_file = align_dest / (file.name + ".bidirectional")
                     self.do_bidirectional_align_file(file, dest_file, **kwargs)
-        
+
+                    # Unbatch files
+                    separators, file_batch = batch_sentences_separators[file]
+                    all_lines = dest_file.read_text().splitlines()
+                    for i, orig_file in enumerate(file_batch):
+                        start, end = separators[i], separators[i+1]
+                        orig_dest_file = align_dest / (orig_file.name + ".bidirectional")
+                        orig_dest_file.write_text("\n".join(all_lines[start:end]))
+                        
+                    # Delete batch files
+                    file.unlink()
+                    dest_file.unlink()
+                    
         futures: List[Future] = []
         with ThreadPoolExecutor(max_workers=self.max_worker) as exe:
             for i in range(self.max_worker):
                 futures.append(exe.submit(batch_work, i))
+                # batch_work(i)
         wait(futures)
         exceptions = [future.exception() for future in futures if future.exception()]
         
@@ -77,8 +109,8 @@ class FastAlignAligner(Aligner):
     Aligner using the fast_align algorithm. 
     """
     
-    def __init__(self, max_worker: Optional[int] = 20, fast_align_path: Optional[Path] = None) -> None:
-        super().__init__(max_worker)
+    def __init__(self, max_worker: Optional[int] = 20, file_batch: int = 30, fast_align_path: Optional[Path] = None) -> None:
+        super().__init__(max_worker, file_batch = file_batch)
         self.fast_align_path = fast_align_path if fast_align_path else Path(__file__, "..", "fast_align", "build", "fast_align").resolve()
     
     def do_bidirectional_align_file(self, sentence_align_dir: Path, alignment_dest: Path, atools_opt: bool=True, **kwargs):
@@ -169,11 +201,11 @@ class AwesomeAlignAligner(Aligner):
         "batch_size"
     }
     
-    def __init__(self, max_worker: Optional[int] = None, awesome_align_path: Optional[Path] = None) -> None:
+    def __init__(self, max_worker: Optional[int] = None, file_batch: int = 30, awesome_align_path: Optional[Path] = None) -> None:
         if max_worker is None:
-            super().__init__(max_worker=1)
+            super().__init__(max_worker=1, file_batch = file_batch)
         else:
-            super().__init__(max_worker=max_worker)
+            super().__init__(max_worker=max_worker, file_batch = file_batch)
             if self.max_worker > 5:
                 logging.warning(f"High value for max_worker in AwesomeAlignAligner. This could lead to files not been precessed. Recommended values are [1, 2, 3]")
 
