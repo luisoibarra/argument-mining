@@ -10,4 +10,5 @@ mv glove-sbwc.i25.vec ./../data/glove-sbwc.i25.vec
 echo "Downloading English Glove Embeddigns"
 curl https://downloads.cs.stanford.edu/nlp/data/glove.840B.300d.zip -o glove.840B.300d.zip
 unzip glove.840B.300d.zip
+rm glove.840B.300d.zip
 mv glove.840B.300d.txt ./../data/glove.840B.300d.txt

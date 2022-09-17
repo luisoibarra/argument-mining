@@ -24,6 +24,7 @@ Folder containing helper scripts to install or run the tools used.
 - `install_nltk_resources.sh`: Install missing nltk resources
 - `install_tools.sh`: Download and install all tools needed.
 - `process_paragraph_corpus.sh`: Process a paragraph like corpus from raw corpus to projection
+- `process_raw_text.sh`: Given a path with text files, extract its arguments and relations
 - `process_sentence_corpus.sh`: Process a sentence like corpus from raw corpus to projection
 - `run_brat.sh`: Run brat server
 - `run_docker_container.sh`: Run jupyter notebook on a docker container.
