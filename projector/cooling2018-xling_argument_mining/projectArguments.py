@@ -83,7 +83,7 @@ def detect_bios(labels):
      indices.append((startindex,endindex,type))
   return indices
 
-def getTranslationIndices(indices,align, tag):
+def getTranslationIndices(indices,align, tag, file_name=""):
   h = {}
   for y in align.split():
     a,b = list(map(int,y.split("-")))
@@ -114,6 +114,7 @@ def getTranslationIndices(indices,align, tag):
         indexStartPrev = aligns[-1][0]
         if indexStart<=indexEndPrev:
           # Intersection isn't empty
+          sys.stderr.write(file_name)
           sys.stderr.write(f"Projection overlaps near to {indexStart} {indexEndPrev}.\nOverlap: {tag[1][indexStart:indexEndPrev+1]}\n")
           if indexEnd<indexStartPrev: 
             sys.stderr.write("%s: Li'l non-monotonity\n"%(tag,))
@@ -121,6 +122,7 @@ def getTranslationIndices(indices,align, tag):
           indexStart = indexEndPrev+1
       if indexStart<=indexEnd: break
     if indexStart>indexEnd:
+        sys.stderr.write(file_name)
         sys.stderr.write(str(aligns))
         sys.stderr.write("%s: ERROR SOMEWHERE: %d %d\n"%(tag, indexStart,indexEnd)); 
         #sys.exit(1)
@@ -140,7 +142,7 @@ def printout(sequence,fout,type="O"):
       pre="" 
     fout.write(token+"\t"+pre+type+"\n")
 
-def process(sentences,sentences_alignments,labels,fout,verbose=False):
+def process(sentences,sentences_alignments,labels,fout,verbose=False, file_name=None):
   n = len(sentences)
   last = 0
   for i in range(len(sentences)):
@@ -153,11 +155,11 @@ def process(sentences,sentences_alignments,labels,fout,verbose=False):
     indices = detect_bios(curLabels)
     last = last+m
     if None in [x for y in indices for x in y]:
-      log.warning(f"None in indices. Skipping projection:\nLabels: {curLabels}\nAlignment: {sentences[i]}")
+      log.warning(f"None in indices at {file_name}. Skipping projection:\nLabels: {curLabels}\nAlignment: {sentences[i]}")
       continue
     #print(en_tokens,"\t",curLabels,"\t",de_tokens,"\t",indices)
     #print(align)
-    aligns = sorted( getTranslationIndices(indices,align, sentences[i]) )
+    aligns = sorted( getTranslationIndices(indices,align, sentences[i], file_name=file_name) )
     if verbose:
       print("ALIGNS",aligns,de)
     #if aligns!=[]:
@@ -176,7 +178,15 @@ def process(sentences,sentences_alignments,labels,fout,verbose=False):
 
 try:
 
-  argv = sys.argv
+  # argv = sys.argv
+  
+  argv = [
+    "",
+    "data/parsed_to_conll/persuasive_essays_paragraph/train/essay215.ann.conll",
+    "data/sentence_alignment/persuasive_essays_paragraph/train/essay215.ann.conll.align",
+    "data/bidirectional_alignment/persuasive_essays_paragraph/train/essay215.ann.conll.align.bidirectional",
+    "data/projection/persuasive_essays_paragraph/train/essay215.ann.conll.projected.conll",
+  ]
 
   train,train_hash = readDoc(argv[1], index0=0)
 
@@ -215,7 +225,7 @@ try:
       for hash in [train_hash]:
         if acc_text in hash:
           labels = hash[acc_text]
-          process(sentences,sentences_alignments,labels,fout)
+          process(sentences,sentences_alignments,labels,fout, file_name=argv[1])
           fout.write("\n")
           acc = []
           sentences=[]

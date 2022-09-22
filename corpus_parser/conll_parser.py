@@ -11,8 +11,8 @@ ConllTagInfo = Dict[str, Union[str,int]]
 
 class ConllParser(Parser):
     
-    ANNOTATION_REGEX = r"^(?P<tok>[^\s]+)\s(?P<bio_tag>[{TAGS}])(-(?P<prop_type>\w+))?(-(?P<relation_type>\w+))?(-(?P<relation_distance>-?\d+))?\s*$"
-    TAG_FORMAT = "{bio_tag}-{prop_type}-{relation_type}-{relation_distance}"
+    ANNOTATION_REGEX = r"^(?P<tok>[^\s]+)\s(?P<bio_tag>[{TAGS}])(-(?P<prop_type>\w+))?(?P<relations>(-\w+--?\d+)*)\s*$"
+    TAG_FORMAT = "{bio_tag}-{prop_type}-{relations_string}"
     ANNOTATION_FORMAT = f"{{tok}}\t{TAG_FORMAT}\n"
     
     def __init__(self, *additional_supported_formats, bioes=False, **kwargs) -> None:
@@ -22,6 +22,7 @@ class ConllParser(Parser):
         self.ANNOTATION_REGEX = self.ANNOTATION_REGEX.format_map({"TAGS": tags})
         self.annotation_regex = re.compile(self.ANNOTATION_REGEX)
         self.__sent_separator = {"tok":"\n", "bio_tag":""}
+        self.__relation_regex = re.compile(r"-(?P<relation_tag>\w+)-(?P<distance>-?\d+)")
     
     def __split_sentences(self, line_infos: list, language: str) -> list:
         """
@@ -52,6 +53,28 @@ class ConllParser(Parser):
             index += 1
         return new_line_infos
         
+    def __extract_relations(self, relations_string: Optional[str]) -> Optional[List[Tuple[str,int]]]:
+        """
+        Extracts the relations from `relations_string`
+        
+        Example "-RelA--1-RelB-2-RelA--3-RelC-4" -> [("RelA", -1), ("RelB", 2), ("RelA", -3), ("RelC", 4)]
+        """
+
+        if relations_string is None:
+            return None
+        relations = []
+        for match in self.__relation_regex.finditer(relations_string):
+            g_dict = match.groupdict()
+            relations.append((g_dict['relation_tag'], int(g_dict['distance'])))
+        return relations
+       
+    def __get_relations_string(self, relations: List[Tuple[str, int]]) -> str:
+        
+        if not relations:
+            return 'none'
+        
+        return "-".join(f"{tag}-{distance}" for tag, distance in relations)
+        
     def parse(self, content:str, file: Optional[Path] = None, get_tags=False, **kwargs) -> ArgumentationInfo:
         """
         Parse `content` returning DataFrames containing
@@ -79,7 +102,7 @@ class ConllParser(Parser):
           - `prop_end` When the proposition ends in the original text
           - `prop_text` Proposition text
           
-        return: (argumentative_units, relationsm non_argumentative_units)
+        return: (argumentative_units, relations, non_argumentative_units)
         """
         
         content = content.splitlines()
@@ -88,8 +111,11 @@ class ConllParser(Parser):
         
         for i,line in enumerate(content):
             match = self.annotation_regex.match(line)
+            
             if match:
-                line_parse.append(match.groupdict())
+                g_dict = match.groupdict()
+                g_dict['relations'] = self.__extract_relations(g_dict['relations'])
+                line_parse.append(g_dict)
             elif line == "":
                 line_parse.append(self.__sent_separator)
             else:
@@ -203,11 +229,12 @@ class ConllParser(Parser):
                 argumentative_units['prop_end'].append(accumulative_offset + len(proposition))
                 argumentative_units['prop_text'].append(proposition)
 
-                if None not in [prop_info["relation_type"], prop_info["relation_distance"]]:
-                    relations['relation_id'].append(len(relations['relation_id']))
-                    relations['relation_type'].append(prop_info["relation_type"])
-                    relations['prop_id_source'].append(prop_id)
-                    relations['prop_id_target'].append(prop_id + int(prop_info["relation_distance"]))
+                if prop_info["relations"] is not None:
+                    for relation_tag, distance in prop_info['relations']:
+                        relations['relation_id'].append(len(relations['relation_id']))
+                        relations['relation_type'].append(relation_tag)
+                        relations['prop_id_source'].append(prop_id)
+                        relations['prop_id_target'].append(prop_id + int(distance))
             
             accumulative_offset += len(proposition)
             if prop_info["bio_tag"] != "":
@@ -231,8 +258,7 @@ class ConllParser(Parser):
                and annotations[i+1]["bio_tag"] == "I" \
                and annotations[i-1]["bio_tag"] in ["B", "I"] \
                and annotations[i-1]["prop_type"] == annotations[i+1]["prop_type"] \
-               and annotations[i-1]["relation_type"] == annotations[i+1]["relation_type"] \
-               and annotations[i-1]["relation_distance"] == annotations[i+1]["relation_distance"]:
+               and annotations[i-1]["relations"] == annotations[i+1]["relations"]:
                 # Skip sentence separator
                 continue
             fixed_annotations.append(annotation)
@@ -276,7 +302,7 @@ class ConllParser(Parser):
                 if pd.notna(prop_type):
                     # It's the begining of a proposition
                     for i,tok in enumerate(prop_tokens):
-                        
+                        current_relations = []
                         if i == 0:
                             if len(prop_tokens) == 1 and self.bioes:
                                 bio_tag = "S"
@@ -287,23 +313,17 @@ class ConllParser(Parser):
                         else:
                             bio_tag = "I"
                         relation = relations[relations["prop_id_source"] == prop_id]
-                        if len(relation) == 1:
-                            relation_type = relation["relation_type"].values[0]
-                            relation_distance = relation["prop_id_target"].values[0] - relation["prop_id_source"].values[0]
-                        elif len(relation) == 0:
-                            relation_type = "none"
-                            relation_distance = "none"
-                        else:
-                            relation_type = "none"
-                            relation_distance = - relation["prop_id_source"].values[0]
-                            log.warning(f"File {file_path_str}. Relation '{prop_text}'' with more than one out edge")
+                        for _, relation in relation.iterrows():
+                            relation_type = relation["relation_type"]
+                            relation_distance = relation["prop_id_target"] - relation["prop_id_source"]
+                            current_relations.append((relation_type, relation_distance))
                         
                         tags_info.append({
                                 "tok": tok,
                                 "bio_tag": bio_tag,
                                 "prop_type": prop_type,
-                                "relation_type": relation_type,
-                                "relation_distance": relation_distance
+                                "relations": current_relations,
+                                "relations_string": self.__get_relations_string(current_relations)
                         })
                         tags_info[-1]["full_tag"] = self.TAG_FORMAT.format_map(tags_info[-1]).replace("-none", "")
 
@@ -319,8 +339,8 @@ class ConllParser(Parser):
                                 "tok": tok,
                                 "bio_tag": "O",
                                 "prop_type": "none",
-                                "relation_type": "none",
-                                "relation_distance": "none"
+                                "relations": "none",
+                                "relations_string": "none",
                             })
                             tags_info[-1]["full_tag"] = "O"
                 

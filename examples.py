@@ -18,14 +18,14 @@ def corpus_processing_example():
     """
 
     base_path = Path("data")
-    dataset_name = "testing2"
+    dataset_name = "testing_conll"
     # dataset_name = "persuasive_essays_sentence"
     # dataset_name = "testing_sentence"
     # dataset_name = "testing"
 
     # corpus_parser = BratParser()
-    # corpus_parser = ConllParser()
-    corpus_parser = UnifiedParser()
+    corpus_parser = ConllParser()
+    # corpus_parser = UnifiedParser()
 
     corpus_dir = Path(base_path, "corpus", dataset_name)
 
@@ -104,8 +104,8 @@ def link_processing_example():
         link_prediction_dir)
 
 if __name__ == "__main__":
-    # corpus_processing_example()
-    link_processing_example()
+    corpus_processing_example()
+    # link_processing_example()
     
     # parse_corpus_pipeline(Path("code", "data", "corpus", "ArgumentAnnotatedEssays-2.0", "train-test-split", "dev"),
     #                       Path("code", "data", "parsed_to_conll", "ArgumentAnnotatedEssays-2.0", "dev"),
