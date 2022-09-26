@@ -6,7 +6,8 @@ from segmenter.segmenter import ArgumentSegmenter
 def perform_segmentation_pipeline(
     segmenter: ArgumentSegmenter, 
     source_dir: Path,
-    destination_dir: Path):
+    destination_dir: Path,
+    language: str = "spanish"):
     """
     Apply the `segmenter` to the files in `source_dir` saving the resutls
     in `destination_dir`
@@ -16,13 +17,13 @@ def perform_segmentation_pipeline(
     destination_dir: Directory to save the processed files
     """
     
-    segmenter.extract_arguments_dir(source_dir, destination_dir)
+    segmenter.extract_arguments_dir(source_dir, destination_dir, language=language)
     
 def perform_link_prediction_pipeline(
     link_predictor: LinkPredictor,
     source_dir: Path,
     destination_dir: Path,
-    source_language: str = 'english'):
+    source_language: str = 'spanish'):
     """
     Apply the `link_predictor` to the files in `source_dir` saving the resutls
     in `destination_dir`
@@ -40,7 +41,7 @@ def perform_full_inference_pipeline(
     source_dir: Path,
     segmenter_destination_dir: Path,
     destination_dir: Path,
-    source_language: str = 'english'):
+    source_language: str = 'spanish'):
     """
     Apply the `segmenter` and `link_predictor` to the files in `source_dir` saving the resutls
     in `destination_dir`

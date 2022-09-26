@@ -13,7 +13,7 @@ class LinkPredictor:
     Base class for link prediction task
     """
     
-    def __init__(self, max_worker: int = 3, max_argumentative_distance: int=10, using_bioes_tags=True) -> None:
+    def __init__(self, max_worker: int = 3, max_argumentative_distance: int = 5, using_bioes_tags=True) -> None:
         self.max_worker = max_worker
         self.max_argumentative_distance = max_argumentative_distance
         self.using_bioes_tags = using_bioes_tags

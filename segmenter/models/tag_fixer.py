@@ -1,5 +1,5 @@
 from typing import List
-
+from collections import Counter
 
 def get_error_importance(window, correct_tag):
     """
@@ -87,8 +87,8 @@ def fix_tags(tags: List[str], verbose=True) -> List[str]:
     return: A list with a valid BIOES sequence
     """
     
-    
-    tags = ["O"] + tags + ["O"]
+    # Fixing BIOES tags without metatags
+    tags = ["O", "O"] + tags + ["O"]
     range_errors = []
     for i in range(len(tags) - 2):
         window = [t[0] for t in tags[i:i+3]] # Removing metatags
@@ -116,4 +116,30 @@ def fix_tags(tags: List[str], verbose=True) -> List[str]:
         fix_window(window, i, tags, verbose=verbose)
         range_errors.clear()
     
-    return tags[1:-1]
+    # Fixing metatags
+    base_current = 1
+    segments = []
+    while base_current < len(tags):
+        base_tag = tags[base_current]
+        if base_tag != "O":
+            # tags[base_current] is [B,S]-Something
+            final_current = base_current
+
+            if base_tag[0] != "S":
+                while tags[final_current][0] != "E":
+                    final_current += 1
+
+            final_current += 1
+            segments.append((base_current, final_current))
+            base_current = final_current
+        else:
+            base_current += 1
+            
+    for start, end in segments:
+        segment_tags = tags[start:end]
+        metatags = Counter(tag[2:] for tag in segment_tags)
+        most_common_tag = metatags.most_common(1)[0][0]
+        # Meta-tag is set to the most common tag in the segment
+        tags[start:end] = [tag[:2] + most_common_tag for tag in segment_tags]
+    
+    return tags[2:-1]

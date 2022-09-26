@@ -2,6 +2,7 @@ from concurrent.futures import Future, ThreadPoolExecutor, wait
 from pathlib import Path
 from typing import List, Tuple
 import random as rand
+from nltk import word_tokenize
 
 SplittedArgumentInfo = Tuple[str,str]
 
@@ -10,7 +11,7 @@ class ArgumentSegmenter:
     def __init__(self, max_worker: int = 3) -> None:
         self.max_worker = max_worker
     
-    def extract_arguments_dir(self, annotation_dir: Path, export_dir: Path):
+    def extract_arguments_dir(self, annotation_dir: Path, export_dir: Path, language="spanish"):
         annotated_files = [file for file in annotation_dir.iterdir() if file.name.endswith(".txt")]
         
         if not export_dir.exists(): export_dir.mkdir(exist_ok=True, parents=True)
@@ -19,7 +20,7 @@ class ArgumentSegmenter:
         
         def batch_work(slice: int) -> str:
             for annotated_file in annotated_files[batch*slice:batch*(slice+1)]:
-                self.extract_arguments_from_file(annotated_file, export_dir)
+                self.extract_arguments_from_file(annotated_file, export_dir, language=language)
         
         futures: List[Future] = []
         with ThreadPoolExecutor(max_workers=self.max_worker) as exe:
@@ -32,7 +33,7 @@ class ArgumentSegmenter:
         if exceptions:
             raise Exception(exceptions)
     
-    def extract_arguments_from_file(self, source_file: Path, dest_directory: Path):
+    def extract_arguments_from_file(self, source_file: Path, dest_directory: Path, language="spanish"):
         """
         Read a space separated content from `source_file` and create in `dest_directory`
         the .conll and the .txt file of the argumentative split.
@@ -42,6 +43,7 @@ class ArgumentSegmenter:
         """
         
         content = source_file.read_text()
+        content = " ".join(word_tokenize(content, language=language))
         argument_info = self.extract_arguments_from_text(content)
         
         conll_dest_file = dest_directory / f"{source_file.name}.conll"
