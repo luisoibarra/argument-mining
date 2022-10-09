@@ -6,6 +6,8 @@ from .parser import AnnotatedRawTextInfo, ArgumentationInfo, Parser
 import re
 import logging as log
 from nltk.tokenize import word_tokenize, sent_tokenize
+from utils.spacy_utils import get_spacy_model
+
 
 ConllTagInfo = Dict[str, Union[str,int]]
 
@@ -15,10 +17,11 @@ class ConllParser(Parser):
     TAG_FORMAT = "{bio_tag}-{prop_type}-{relations_string}"
     ANNOTATION_FORMAT = f"{{tok}}\t{TAG_FORMAT}\n"
     
-    def __init__(self, *additional_supported_formats, bioes=False, **kwargs) -> None:
+    def __init__(self, *additional_supported_formats, bioes=False, use_spacy=False, **kwargs) -> None:
         super().__init__((".conll", *additional_supported_formats), ".conll")
         tags = "BIO" if not bioes else "BIOES"
         self.bioes = bioes
+        self.use_spacy = use_spacy
         self.ANNOTATION_REGEX = self.ANNOTATION_REGEX.format_map({"TAGS": tags})
         self.annotation_regex = re.compile(self.ANNOTATION_REGEX)
         self.__sent_separator = {"tok":"\n", "bio_tag":""}
@@ -42,8 +45,13 @@ class ConllParser(Parser):
         
         for end in previous_splitted:
             content = " ".join(tok["tok"] for tok in line_infos[index:end])
-            for sentence in sent_tokenize(content, language=language):
-                for word in sentence.split(" "):
+            if self.use_spacy:
+                nlp = get_spacy_model(language)
+                sentences = [x.text for x in nlp(content).sents]
+            else:
+                sentences = sent_tokenize(content, language=language)
+            for sentence in sentences:
+                for word in sentence.strip().split(" "):
                     assert word == line_infos[index]["tok"]
                     new_line_infos.append(line_infos[index])
                     index += 1
@@ -292,7 +300,12 @@ class ConllParser(Parser):
             text = default_gap*max_length if exact_text else ""
             
             for index, (prop_id, prop_type, prop_init, prop_end, prop_text) in all_units.iterrows():
-                prop_tokens = word_tokenize(prop_text, language=source_language)
+                if self.use_spacy:
+                    nlp = get_spacy_model(source_language)
+                    doc = nlp(prop_text)
+                    prop_tokens = [x.text for x in doc if "\n" not in x.text and x.text.strip()]
+                else:
+                    prop_tokens = word_tokenize(prop_text, language=source_language)
                 
                 if exact_text:
                     text = text[:prop_init] + prop_text + text[prop_end:]

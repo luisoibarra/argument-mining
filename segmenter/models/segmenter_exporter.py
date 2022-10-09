@@ -1,6 +1,8 @@
 
 from pathlib import Path
+from typing import List
 import nltk
+from utils.spacy_utils import get_spacy_model
 
 def convert_to_tuples(data:Path, all_words: set, all_tags: set, all_chars: set, bioes=True, meta_tags_level=99, meta_tags_separator="-", use_sentence_split=False):
     tags = []
@@ -106,18 +108,20 @@ def convert_bio_to_bioes(bio_tags: list, trace_info=None):
   
     return bioes_tags
 
-def export(conll_file: Path, dest_sentence_file: Path, dest_tag_file: Path, all_words: set, all_tags: set, all_chars: set, language: str="english", meta_tags_level=99, meta_tags_separator="-", use_sentence_split=True, use_nltk=True):
+def export(conll_file: Path, dest_sentence_file: Path, dest_tag_file: Path, dest_pos_file: Path, all_words: set, all_tags: set, all_chars: set, all_pos: set, language: str="english", meta_tags_level=99, meta_tags_separator="-", use_sentence_split=True, use_nltk=True, spacy_pos=True):
     """
-    Creates from `conll_file` two files, `dest_sentence_file` and 
-    `dest_tag_file`, containing the sentences splitted by `nltk` 
-    and its corresponding tags respectively. In each file the tokens
+    Creates from `conll_file` three files, `dest_sentence_file`, 
+    `dest_tag_file` and `dest_pos_file`, containing the sentences splitted by `nltk` 
+    , its corresponding tags and the POS tags respectively. In each file the tokens
     are separated with a blank space.
     
     conll_file: Original conll file
     dest_sentence_file: File containing the sentences.
     dest_tag_file: File containing the tags.
+    dest_pos_file: File containing the POS tags.
     with_meta_tags: If the output should conserve the meta tags
     use_sentence_split: If the empty lines should be analyzed as sentence separators
+    spacy_pos: If use Spacy for POS annotation, if false NLTK will be used.
     """
     
     conll_paragraph_tuples = convert_to_tuples(conll_file, all_words, all_tags, all_chars, meta_tags_level=meta_tags_level, meta_tags_separator=meta_tags_separator, use_sentence_split=use_sentence_split)
@@ -182,10 +186,12 @@ def export(conll_file: Path, dest_sentence_file: Path, dest_tag_file: Path, all_
         current_sentence.clear()
         current_tags.clear()
     
-    dest_sentence_file.write_text("\n".join(" ".join(sentence) for sentence in dest_sentence_content))
+    text = "\n".join(" ".join(sentence) for sentence in dest_sentence_content)
+    export_pos(dest_sentence_content, dest_pos_file, all_pos, language, spacy_pos)
+    dest_sentence_file.write_text(text)
     dest_tag_file.write_text("\n".join(" ".join(tags) for tags in dest_tag_content))
 
-def export_vocabs(base_path: Path, all_words: set, all_chars: set, all_tags: set):
+def export_vocabs(base_path: Path, all_words: set, all_chars: set, all_tags: set, all_pos: set):
     
     with (base_path / 'vocab.words.txt').open('w') as f:
         for w in sorted(all_words):
@@ -199,31 +205,61 @@ def export_vocabs(base_path: Path, all_words: set, all_chars: set, all_tags: set
         for w in sorted(all_tags):
             if w:
                 f.write(f'{w}\n')
+    with (base_path / 'vocab.pos.txt').open('w') as f:
+        for w in sorted(all_pos):
+            if w:
+                f.write(f'{w}\n')
 
-def export_from_directory(source_directory: Path, dest_sent_file: Path, dest_tag_file: Path, all_words: set, all_tags: set, all_chars: set, language: str="english", meta_tags_level=99, meta_tags_separator="-"):
+def export_from_directory(source_directory: Path, dest_sent_file: Path, dest_tag_file: Path, dest_pos_file: Path, all_words: set, all_tags: set, all_chars: set, all_pos: set, language: str="english", meta_tags_level=99, meta_tags_separator="-", spacy_pos=True):
     temp_sent_file = Path("tempsentence16916312639")
     temp_tag_file = Path("temptag16916312639")
+    temp_pos_file = Path("temppos16916312639")
     temp_sent_file.touch()
     temp_tag_file.touch()
+    temp_pos_file.touch()
     
     dest_sent_file.touch()
     dest_tag_file.touch()
+    dest_pos_file.touch()
     try:
-        with dest_sent_file.open("w") as dest_sent:
-            with dest_tag_file.open("w") as dest_tag:
-                for file in source_directory.iterdir():
-                    if file.suffix == ".conll":
-                        export(file, temp_sent_file, temp_tag_file, all_words, all_tags, all_chars, language, meta_tags_level, meta_tags_separator, use_sentence_split=False, use_nltk=False)
-                        dest_sent.write(temp_sent_file.read_text().replace("\n", " "))
-                        dest_tag.write(temp_tag_file.read_text().replace("\n", " "))
-                        dest_sent.write("\n")
-                        dest_tag.write("\n")
+        with dest_sent_file.open("w") as dest_sent, dest_tag_file.open("w") as dest_tag, dest_pos_file.open("w") as dest_pos:
+            for file in source_directory.iterdir():
+                if file.suffix == ".conll":
+                    export(file, temp_sent_file, temp_tag_file, temp_pos_file, all_words, all_tags, all_chars, all_pos, language, meta_tags_level, meta_tags_separator, use_sentence_split=False, use_nltk=False, spacy_pos=spacy_pos)
+                    dest_sent.write(temp_sent_file.read_text().replace("\n", " "))
+                    dest_tag.write(temp_tag_file.read_text().replace("\n", " "))
+                    dest_pos.write(temp_pos_file.read_text().replace("\n", " "))
+                    dest_sent.write("\n")
+                    dest_tag.write("\n")
+                    dest_pos.write("\n")
     finally:
         temp_sent_file.unlink()
         temp_tag_file.unlink()
+        temp_pos_file.unlink()
 
+def export_pos(sentences: List[List[str]], dest_pos_file: Path, all_pos: set, language: str, with_spacy=True):
+    """
+    Export the POS tags from `content` into `dest_pos_file`.
+    Each sententce will be in a independent line
+    
+    sentences: Text to extract the POS tags
+    dest_pos_file: File to save the POS tags
+    """
+    dest_pos_file.touch(exist_ok=True)
+    
+    if with_spacy:
+        nlp = get_spacy_model(language, True)
+        sentences = [" ".join(x for x in sentence) for sentence in sentences]
+        sentences = [[s.pos_ for s in nlp(sentence)] for sentence in sentences]
+        pos_text = "\n".join(" ".join(x for x in sentence) for sentence in sentences)
+    else:
+        sentences = nltk.pos_tag_sents(sentences, tagset="universal", lang = language[:3])
+        pos_text = "\n".join(" ".join(x[1] for x in sentence) for sentence in sentences)
 
-def export_files(data_dir: Path, dest_dir: Path, language: str, meta_tags_level: int, meta_tag_separator="-"):
+    all_pos.update(pos for sentence in pos_text.splitlines() for pos in sentence.split())
+    dest_pos_file.write_text(pos_text)
+
+def export_files(data_dir: Path, dest_dir: Path, language: str, meta_tags_level: int, meta_tag_separator="-", spacy_pos=True):
     """
     Creates a dataset for the files in `data_dir`, this directory must contain 3 .conll
     annotated files called train, dev and test. The separation between samples is an 
@@ -234,11 +270,13 @@ def export_files(data_dir: Path, dest_dir: Path, language: str, meta_tags_level:
     language: Language of the data
     meta_tags_level: Level of annotation to get: 0: BIOES, 1: BIOES-OtherTag, 2: BIOES-Tag1-Tag2, ...
     meta_tag_separator: Conll annotation separator 
+    spacy_pos: If use Spacy for POS annotation, if false NLTK will be used.
     """
 
     all_words = set()
     all_tags = set()
     all_chars = set()
+    all_pos = set()
 
     dest_dir.mkdir(parents=True, exist_ok=True)
     
@@ -246,24 +284,27 @@ def export_files(data_dir: Path, dest_dir: Path, language: str, meta_tags_level:
     train_file = data_dir / "train.conll"
     train_dest_sent_file = dest_dir / "train.words.txt"
     train_dest_tag_file = dest_dir / "train.tags.txt"
-    export(train_file, train_dest_sent_file, train_dest_tag_file, all_words, all_tags, all_chars, language, meta_tags_level, meta_tag_separator, use_sentence_split=True, use_nltk=False)
+    train_dest_pos_file = dest_dir / "train.pos.txt"
+    export(train_file, train_dest_sent_file, train_dest_tag_file, train_dest_pos_file, all_words, all_tags, all_pos, all_chars, language, meta_tags_level, meta_tag_separator, use_sentence_split=True, use_nltk=False, spacy_pos=spacy_pos)
 
     # Test Block
     testa_file = data_dir / "test.conll"
     testa_dest_sent_file = dest_dir / "testa.words.txt"
     testa_dest_tag_file = dest_dir / "testa.tags.txt"
-    export(testa_file, testa_dest_sent_file, testa_dest_tag_file, all_words, all_tags, all_chars, language, meta_tags_level, meta_tag_separator, use_sentence_split=True, use_nltk=False)
+    testa_dest_pos_file = dest_dir / "testa.pos.txt"
+    export(testa_file, testa_dest_sent_file, testa_dest_tag_file, testa_dest_pos_file, all_words, all_tags, all_pos, all_chars, language, meta_tags_level, meta_tag_separator, use_sentence_split=True, use_nltk=False, spacy_pos=spacy_pos)
 
     # Validation Block
     testb_file = data_dir / "dev.conll"
     testb_dest_sent_file = dest_dir / "testb.words.txt"
     testb_dest_tag_file = dest_dir / "testb.tags.txt"
-    export(testb_file, testb_dest_sent_file, testb_dest_tag_file, all_words, all_tags, all_chars, language, meta_tags_level, meta_tag_separator, use_sentence_split=True, use_nltk=False)
+    testb_dest_pos_file = dest_dir / "testb.pos.txt"
+    export(testb_file, testb_dest_sent_file, testb_dest_tag_file, testb_dest_pos_file, all_words, all_tags, all_pos, all_chars, language, meta_tags_level, meta_tag_separator, use_sentence_split=True, use_nltk=False, spacy_pos=spacy_pos)
 
     # Export vocabularies
     export_vocabs(dest_dir, all_words, all_chars, all_tags)
 
-def export_directory(data_dir: Path, dest_dir: Path, language: str, meta_tags_level: int, meta_tag_separator="-", only_train=True):
+def export_directory(data_dir: Path, dest_dir: Path, language: str, meta_tags_level: int, meta_tag_separator="-", only_train=True, spacy_pos=True):
     """
     Creates a dataset for the files in `data_dir`, this directory must contain 3 directories
     train, dev and test with .conll annotated files. The data is saved in `dest_dir`
@@ -274,21 +315,25 @@ def export_directory(data_dir: Path, dest_dir: Path, language: str, meta_tags_le
     meta_tags_level: Level of annotation to get: 0: BIOES, 1: BIOES-OtherTag, 2: BIOES-Tag1-Tag2, ...
     meta_tag_separator: Conll annotation separator 
     only_train: If only the train file will be used to export the words, chars and tags files. Prevents information leaking
+    spacy_pos: If use Spacy for POS annotation, if false NLTK will be used.
     """
     
     all_words = set()
     all_tags = set()
     all_chars = set()
+    all_pos = set()
     
     dest_dir.mkdir(parents=True, exist_ok=True)
 
     testb_sent_file = dest_dir / "testb.words.txt"
     testb_tag_file = dest_dir / "testb.tags.txt"
-    export_from_directory(data_dir / "dev", testb_sent_file, testb_tag_file, all_words, all_tags, all_chars, language, meta_tags_level, meta_tag_separator)
+    testb_pos_file = dest_dir / "testb.pos.txt"
+    export_from_directory(data_dir / "dev", testb_sent_file, testb_tag_file, testb_pos_file, all_words, all_tags, all_chars, all_pos, language, meta_tags_level, meta_tag_separator, spacy_pos=spacy_pos)
     
     testa_sent_file = dest_dir / "testa.words.txt"
     testa_tag_file = dest_dir / "testa.tags.txt"
-    export_from_directory(data_dir / "test", testa_sent_file, testa_tag_file, all_words, all_tags, all_chars, language, meta_tags_level, meta_tag_separator)
+    testa_pos_file = dest_dir / "testa.pos.txt"
+    export_from_directory(data_dir / "test", testa_sent_file, testa_tag_file, testa_pos_file, all_words, all_tags, all_chars, all_pos, language, meta_tags_level, meta_tag_separator, spacy_pos=spacy_pos)
 
     if only_train:
         all_words = set()
@@ -297,10 +342,11 @@ def export_directory(data_dir: Path, dest_dir: Path, language: str, meta_tags_le
 
     train_sent_file = dest_dir / "train.words.txt"
     train_tag_file = dest_dir / "train.tags.txt"
-    export_from_directory(data_dir / "train", train_sent_file, train_tag_file, all_words, all_tags, all_chars, language, meta_tags_level, meta_tag_separator)
+    train_pos_file = dest_dir / "train.pos.txt"
+    export_from_directory(data_dir / "train", train_sent_file, train_tag_file, train_pos_file, all_words, all_tags, all_chars, all_pos, language, meta_tags_level, meta_tag_separator, spacy_pos=spacy_pos)
 
     # Export vocabularies
-    export_vocabs(dest_dir, all_words, all_chars, all_tags)
+    export_vocabs(dest_dir, all_words, all_chars, all_tags, all_pos)
 
 if __name__ == "__main__":
 

@@ -1,1 +1,1 @@
-docker build -t tensorflow-addons-nltk-pandas-sklearn-awesome-align-corpus:2.9.1-jupyter .
+docker build -t tensorflow-addons-nltk-pandas-sklearn-awesome-align-corpus-spacy:2.9.1-jupyter .

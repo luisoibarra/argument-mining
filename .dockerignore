@@ -3,3 +3,4 @@ __pycache__
 .pytest_cache
 .ipynb_checkpoints
 link_prediction/StructurePrediction18
+trash/

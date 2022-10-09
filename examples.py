@@ -18,13 +18,13 @@ def corpus_processing_example():
     """
 
     base_path = Path("data")
-    dataset_name = "testing_conll"
+    # dataset_name = "testing_conll"
     # dataset_name = "persuasive_essays_sentence"
     # dataset_name = "testing_sentence"
-    # dataset_name = "testing"
+    dataset_name = "testing"
 
-    # corpus_parser = BratParser()
-    corpus_parser = ConllParser()
+    corpus_parser = BratParser()
+    # corpus_parser = ConllParser(use_spacy=True)
     # corpus_parser = UnifiedParser()
 
     corpus_dir = Path(base_path, "corpus", dataset_name)
