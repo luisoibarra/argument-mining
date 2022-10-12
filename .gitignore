@@ -18,3 +18,5 @@ brat/
 
 trash/
 TODO.md
+*.tagger
+*.pickle

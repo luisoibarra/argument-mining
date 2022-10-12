@@ -19,7 +19,7 @@ def get_spacy_model(language: str, whitespace_tokenizer = False) -> spacy.langua
     try:
         model = SPACY_LANGUAGE_MODEL_DICT[language]
     except KeyError:
-        raise KeyError(f"{language} not supported. Supported lanugages: {', '.join(SPACY_LANGUAGE_MODEL_DICT)}")
+        raise KeyError(f"{language} not supported. Supported languages: {', '.join(SPACY_LANGUAGE_MODEL_DICT)}")
     if model not in SPACY_DICT:
         nlp = spacy.load(model)
         if whitespace_tokenizer:
@@ -33,7 +33,7 @@ class WhitespaceTokenizer:
         self.vocab = vocab
 
     def __call__(self, text: str):
-        words = text.split(' ')
+        words = text.split()
         # All tokens 'own' a subsequent space character in this tokenizer
         spaces = [True] * len(words)
         return Doc(self.vocab, words=words, spaces=spaces)

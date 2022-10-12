@@ -1,8 +1,15 @@
-
 from pathlib import Path
+if __name__ == "__main__":
+    import sys
+    path = str(Path(__file__, "..", "..", "..").resolve())
+    if path not in sys.path:
+        print(path)
+        sys.path.insert(0, path)
+
 from typing import List
 import nltk
-from utils.spacy_utils import get_spacy_model
+from pos_tagger.pos_tagger import SpacyPOSTagger, NLTKPOSTagger
+
 
 def convert_to_tuples(data:Path, all_words: set, all_tags: set, all_chars: set, bioes=True, meta_tags_level=99, meta_tags_separator="-", use_sentence_split=False):
     tags = []
@@ -248,14 +255,12 @@ def export_pos(sentences: List[List[str]], dest_pos_file: Path, all_pos: set, la
     dest_pos_file.touch(exist_ok=True)
     
     if with_spacy:
-        nlp = get_spacy_model(language, True)
-        sentences = [" ".join(x for x in sentence) for sentence in sentences]
-        sentences = [[s.pos_ for s in nlp(sentence)] for sentence in sentences]
-        pos_text = "\n".join(" ".join(x for x in sentence) for sentence in sentences)
+        pos_tagger = SpacyPOSTagger()
     else:
-        sentences = nltk.pos_tag_sents(sentences, tagset="universal", lang = language[:3])
-        pos_text = "\n".join(" ".join(x[1] for x in sentence) for sentence in sentences)
+        pos_tagger = NLTKPOSTagger()
 
+    sentences = pos_tagger.pos_tags_sents(sentences, language)
+    pos_text = "\n".join(" ".join(x for x in sentence) for sentence in sentences)
     all_pos.update(pos for sentence in pos_text.splitlines() for pos in sentence.split())
     dest_pos_file.write_text(pos_text)
 
@@ -359,7 +364,7 @@ if __name__ == "__main__":
     meta_tags_level = 1
     meta_tag_separator = "-"
     
-    export_directory(data_dir, dest_dir, language, meta_tags_level, meta_tag_separator)
+    export_directory(data_dir, dest_dir, language, meta_tags_level, meta_tag_separator, spacy_pos=False)
     
 
     # data_dir = Path(__file__, "..", "..", "..", "data").resolve()
