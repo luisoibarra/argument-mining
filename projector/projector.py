@@ -44,14 +44,14 @@ class Projector:
                 try:
                     sentence_aligned_file = [
                         file for file in sentences_aligned_files 
-                            if annotated_file.name in file.name and file.name.endswith(".align")
+                            if file.name.startswith(annotated_file.name) and file.name.endswith(".align")
                     ][0] # Find the associated .align file
                 except IndexError as e:
                     raise IndexError(f"No aligned sentence found for {annotated_file}. Expected like {annotated_file}.align")
                 try:
                     bidirectional_alignment_file = [
                         file for file in bidirectional_alignments_files 
-                            if annotated_file.name in file.name and file.name.endswith(".bidirectional")
+                            if file.name.startswith(annotated_file.name) and file.name.endswith(".bidirectional")
                     ][0] # Find the associated .bidirectional file
                 except IndexError as e:
                     raise IndexError(f"No bidirectional alignment found for {annotated_file}. Expected like {annotated_file}.bidirectional")
@@ -383,14 +383,14 @@ class CrossLingualAnnotationProjector(Projector):
                 try:
                     sentence_aligned_file = [
                         file for file in sentences_aligned_files 
-                            if annotated_file.name in file.name and file.name.endswith(".align")
+                            if file.name.startswith(annotated_file.name) and file.name.endswith(".align")
                     ][0] # Find the associated .align file
                 except IndexError as e:
                     raise IndexError(f"No aligned sentence found for {annotated_file}. Expected like {annotated_file}.align")
                 try:
                     bidirectional_alignment_file = [
                         file for file in bidirectional_alignments_files 
-                            if annotated_file.name in file.name and file.name.endswith(".bidirectional")
+                            if file.name.startswith(annotated_file.name) and file.name.endswith(".bidirectional")
                     ][0] # Find the associated .bidirectional file
                 except IndexError as e:
                     raise IndexError(f"No bidirectional alignment found for {annotated_file}. Expected like {annotated_file}.bidirectional")

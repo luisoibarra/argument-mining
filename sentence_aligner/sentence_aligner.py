@@ -1,5 +1,7 @@
 from concurrent.futures import Future, ThreadPoolExecutor, wait
 import logging
+
+from utils.spacy_utils import get_spacy_model
 from .translator import Translator
 from typing import Callable, Dict, List, Optional, Tuple
 from corpus_parser.conll_parser import ConllParser
@@ -57,7 +59,8 @@ class SentenceAligner:
             sent_tokenizer: Callable[[str,],List[str]]=sent_tokenize, 
             source_language: str="english", 
             target_language: str="spanish", 
-            separator: str=SEPARATOR) -> str:
+            separator: str=SEPARATOR,
+            **kwargs) -> str:
         """
         Split the given `text` sentence by sentence using the given `sent_tokenizer`. The
         split is made by placing in each line the sentence in `source_language`
@@ -86,7 +89,7 @@ class SentenceAligner:
             for sentence in sentences[batch*slice:batch*(slice+1)]:
                 # Result is the sentence's tokens separated by spaces
                 source_sentence_with_spaces = " ".join(source_word_tokenizer(sentence, language=source_language)).strip()
-                target_sentence = self.translator.translate(source_sentence_with_spaces, source_language=source_language, target_language=target_language)
+                target_sentence = self.translator.translate(source_sentence_with_spaces, source_language=source_language, target_language=target_language, **kwargs)
                 if target_sentence is not None:
                     target_sentence_with_spaces = " ".join(target_word_tokenizer(target_sentence, language=target_language)).strip()
                 else:
@@ -99,6 +102,7 @@ class SentenceAligner:
         with ThreadPoolExecutor(max_workers=self.max_worker) as exe:
             for i in range(self.max_worker):
                 futures.append(exe.submit(batch_work, i))
+                # batch_work(i)
         wait(futures)
         exceptions = [future.exception() for future in futures if future.exception()]
         

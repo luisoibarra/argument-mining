@@ -9,14 +9,15 @@ import json
 
 class Translator:
 
-    def translate(self, source_sentence: str, source_language:str, target_language: str) -> str:
+    def translate(self, source_sentence: str, source_language:str, target_language: str, middle_language: Optional[str] = None, **kwargs) -> str:
         """
         Translate given `sentence` in `source_language` into `target_language`
         
         sentence: Sentence to translate
         source_language: Language of given sentence
         target_language: Language to translate the sentence
-        
+        middle_language: If defined the translation process will be: source_language -> middle_language -> target_language
+
         returns: The translated sentence
         """
         raise NotImplementedError()
@@ -29,7 +30,7 @@ class Translator:
 
 class SelfTranslator(Translator):
     
-    def translate(self, source_sentence: str, source_language:str, target_language: str) -> str:
+    def translate(self, source_sentence: str, source_language:str, target_language: str, middle_language: Optional[str] = None, **kwargs) -> str:
         return source_sentence
     
 class FromCorpusTranslator(Translator):
@@ -54,7 +55,7 @@ class FromCorpusTranslator(Translator):
         self.__sep_regex = re.compile(self.SEP_REGEX)
         self.__initialize(source_language, target_language)
         
-    def translate(self, source_sentence: str, source_language: str, target_language: str) -> str:
+    def translate(self, source_sentence: str, source_language: str, target_language: str, middle_language: Optional[str] = None, **kwargs) -> str:
         try:
             return self.__translation_dict[source_language, target_language, source_sentence]
         except KeyError:
@@ -192,7 +193,10 @@ class BaseDeepTranslator(Translator):
         """
         raise NotImplementedError()
     
-    def translate(self, source_sentence: str, source_language:str, target_language: str) -> str:
+    def translate(self, source_sentence: str, source_language:str, target_language: str, middle_language: Optional[str] = None, **kwargs) -> str:
+        if middle_language is not None:
+            source_sentence = self.translate(source_sentence, source_language, middle_language)
+            source_language = middle_language
         cached_translated = self.__check_cache(source_sentence, source_language, target_language)
         if cached_translated is not None:
             return cached_translated

@@ -34,6 +34,12 @@ choice_args = [
         type=str,
         values=("unified", "brat", "conll")
     ),
+    ChoiceArg(
+        name="use_spacy",
+        help="If spacy is used to perform word and sentence segmentation.",
+        type=str,
+        values=("True", "False")
+    )
 ]
 
 optional_args = [
@@ -52,11 +58,14 @@ optional_args = [
 ]
 
 def create_from_args(args) -> Parser:
+    
+    args.use_spacy = True if args.use_spacy.lower() == "true" else False
+    
     # Get values
     parser = {
-        "unified": UnifiedParser(),
+        "unified": UnifiedParser(use_spacy=args.use_spacy),
         "brat": BratParser(),
-        "conll": ConllParser(),
+        "conll": ConllParser(use_spacy=args.use_spacy),
     }[args.parser]
     
     return parser
@@ -67,7 +76,7 @@ def handle_from_args(args):
                      source_language=args.source_language, 
                      target_language=args.target_language)
 
-    conll = ConllParser() 
+    conll = ConllParser(use_spacy=args.use_spacy) 
 
     conll.export_from_dataframes(args.conll_parsed_path, 
                                  df, 

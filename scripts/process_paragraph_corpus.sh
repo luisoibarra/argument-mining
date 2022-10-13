@@ -12,6 +12,8 @@ fi
 
 CORPUS_NAME=$1
 
+echo "Processing dev..."
+
 python3 project_corpus.py \
 "data/corpus/$CORPUS_NAME/dev" \
 "data/parsed_to_conll/$CORPUS_NAME/dev" \
@@ -19,12 +21,16 @@ python3 project_corpus.py \
 "data/bidirectional_alignment/$CORPUS_NAME/dev" \
 "data/projection/$CORPUS_NAME/dev" 
 
+echo "Processing test..."
+
 python3 project_corpus.py \
 "data/corpus/$CORPUS_NAME/test" \
 "data/parsed_to_conll/$CORPUS_NAME/test" \
 "data/sentence_alignment/$CORPUS_NAME/test" \
 "data/bidirectional_alignment/$CORPUS_NAME/test" \
 "data/projection/$CORPUS_NAME/test" 
+
+echo "Processing train..."
 
 python3 project_corpus.py \
 "data/corpus/$CORPUS_NAME/train" \

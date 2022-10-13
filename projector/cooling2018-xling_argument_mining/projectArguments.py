@@ -178,15 +178,15 @@ def process(sentences,sentences_alignments,labels,fout,verbose=False, file_name=
 
 try:
 
-  # argv = sys.argv
+  argv = sys.argv
   
-  argv = [
-    "",
-    "data/parsed_to_conll/persuasive_essays_paragraph/train/essay215.ann.conll",
-    "data/sentence_alignment/persuasive_essays_paragraph/train/essay215.ann.conll.align",
-    "data/bidirectional_alignment/persuasive_essays_paragraph/train/essay215.ann.conll.align.bidirectional",
-    "data/projection/persuasive_essays_paragraph/train/essay215.ann.conll.projected.conll",
-  ]
+  # argv = [
+  #   "",
+  #   "data/parsed_to_conll/persuasive_essays_paragraph/train/essay215.ann.conll",
+  #   "data/sentence_alignment/persuasive_essays_paragraph/train/essay215.ann.conll.align",
+  #   "data/bidirectional_alignment/persuasive_essays_paragraph/train/essay215.ann.conll.align.bidirectional",
+  #   "data/projection/persuasive_essays_paragraph/train/essay215.ann.conll.projected.conll",
+  # ]
 
   train,train_hash = readDoc(argv[1], index0=0)
 

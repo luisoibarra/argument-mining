@@ -1,3 +1,4 @@
+from data_augmentation.translation_augmentation import DataAugmentator, TranslateDataAugmentator
 from link_prediction.link_predictor import LinkPredictor, RandomLinkPredictor
 from segmenter.segmenter import ArgumentSegmenter, RandomArgumentSegmenter
 from corpus_parser.unified_parser import UnifiedParser
@@ -55,6 +56,9 @@ def corpus_processing_example():
     # projector = PendingSourceAnnotationProjector()
     projector = CrossLingualAnnotationProjector()
 
+    # data_augmentator = None
+    data_augmentator = TranslateDataAugmentator()
+
     # make_alignemnts_pipeline(
     #     exported_conll_dir,
     #     sentences_alignment_dir,
@@ -73,7 +77,10 @@ def corpus_processing_example():
         corpus_parser,
         sentence_aligner,
         aligner, 
-        projector)
+        projector,
+        data_augmentator,
+        middle_language="french"
+        )
 
 def link_processing_example():
     
