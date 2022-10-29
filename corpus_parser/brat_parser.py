@@ -12,13 +12,20 @@ class BratParser(Parser):
     """
     
     # Regex using named groups
-    ARGUMENTATIVE_UNIT = r"^T(?P<prop_id>\d+)\s(?P<prop_type>\w+)\s(?P<prop_init>\d+)\s(?P<prop_end>\d+)\s(?P<prop_text>.+)\s*$"
-    RELATION = r"^R(?P<relation_id>\d+)\s(?P<relation_type>\w+)\sArg1:T(?P<prop_id_source>\d+)\sArg2:T(?P<prop_id_target>\d+)\s*$"
+    ARGUMENTATIVE_UNIT = r"^T(?P<prop_id>\d+)\s(?P<prop_type>[\w\-_]+)\s(?P<prop_init>\d+)\s(?P<prop_end>\d+)\s(?P<prop_text>.+)\s*$"
+    RELATION = r"^R(?P<relation_id>\d+)\s(?P<relation_type>[\w\-_]+)\sArg1:T(?P<prop_id_source>\d+)\sArg2:T(?P<prop_id_target>\d+)\s*$"
     
     def __init__(self, **kwargs) -> None:
         super().__init__((".ann",), ".ann")
         self.argumentative_unit_regex = re.compile(self.ARGUMENTATIVE_UNIT)
         self.relation_regex = re.compile(self.RELATION)
+
+    def unknown_match_handler(self, content: str, argumentative_units: pd.DataFrame, non_argumentative_units: pd.DataFrame, relations: pd.DataFrame, file: Path, index: int) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+        """
+        Handler for mismatched content
+        """
+        log.warning(f"Line {index} file {file.name}. Match not found: {content}")
+        return argumentative_units, non_argumentative_units, relations
 
     def parse(self, content:str, file: Path, **kwargs) -> ArgumentationInfo:
         """
@@ -64,7 +71,8 @@ class BratParser(Parser):
                 argument_dict["prop_id"] = int(argument_dict["prop_id"])
                 argument_dict["prop_init"] = int(argument_dict["prop_init"])
                 argument_dict["prop_end"] = int(argument_dict["prop_end"])
-                
+                argument_dict["prop_type"] = argument_dict["prop_type"].replace("-", "_")
+
                 argumentative_units = pd.concat([argumentative_units, pd.DataFrame(argument_dict, index=[0])], ignore_index=True)
                 continue
             relation_match = self.relation_regex.match(line)
@@ -74,17 +82,18 @@ class BratParser(Parser):
                 argument_dict["relation_id"] = int(argument_dict["relation_id"])
                 argument_dict["prop_id_source"] = int(argument_dict["prop_id_source"])
                 argument_dict["prop_id_target"] = int(argument_dict["prop_id_target"])
+                argument_dict["relation_type"] = argument_dict["relation_type"].replace("-", "_")
                 
                 relations = pd.concat([relations, pd.DataFrame(argument_dict, index=[0])], ignore_index=True)
                 continue
-            log.warning(f"Line {i} file {file.name}. Match not found: {line}")
-        
+            argumentative_units, non_argumentative_units, relations = self.unknown_match_handler(line, argumentative_units, non_argumentative_units, relations, file, i)
+            
         argumentative_units.sort_values(by="prop_init", inplace=True)
         
         order_ids = {old_id: new_id for new_id, old_id in enumerate(argumentative_units['prop_id'], start=1)}
-        argumentative_units['prop_id'] = argumentative_units['prop_id'].map(lambda x: order_ids[x])
-        relations['prop_id_source'] = relations['prop_id_source'].map(lambda x: order_ids[x])
-        relations['prop_id_target'] = relations['prop_id_target'].map(lambda x: order_ids[x])
+        argumentative_units['prop_id'] = argumentative_units['prop_id'].map(lambda x: order_ids.get(x, -1))
+        relations['prop_id_source'] = relations['prop_id_source'].map(lambda x: order_ids.get(x, -1))
+        relations['prop_id_target'] = relations['prop_id_target'].map(lambda x: order_ids.get(x, -1))
         
         last_match = 0
         for _, (_, _, prop_init, prop_end, _) in argumentative_units.iterrows():
@@ -244,4 +253,58 @@ class BratParser(Parser):
             arguments.update(arg['prop_type'])
         
         self.create_conf_files(corpus_path, relations, arguments)
+
+class PersuasiveEssaysParser(BratParser):
+    """
+    Parser created for the PersuasiveEssays Corpus. Convert the claim's stances into attack or support relations.
+    New relations will be directed from the Claim to all MajorClaims 
+    """
+    
+    STANCE = r"^A(?P<prop_id>\d+)\sStance\sT(?P<prop_id_source>\d+)\s(?P<stance_relation_type>(Against)|(For))\s*$"
+
+    def __init__(self, **kwargs) -> None:
+        super().__init__(**kwargs)
+        self.stance_regex = re.compile(self.STANCE)
         
+    def unknown_match_handler(self, content: str, argumentative_units: pd.DataFrame, non_argumentative_units: pd.DataFrame, relations: pd.DataFrame, file: Path, index: int) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+        stance_match = self.stance_regex.match(content)
+        if stance_match:
+            argument_dict = stance_match.groupdict()
+            
+            argument_dict["relation_id"] = -1 # Mark Relation ID
+            argument_dict["prop_id_source"] = int(argument_dict["prop_id_source"]) 
+            argument_dict["prop_id_target"] = 1 # Must be filled with all Major Claims 
+            
+            relations = pd.concat([relations, pd.DataFrame(argument_dict, index=[0])], ignore_index=True)
+
+            return argumentative_units, non_argumentative_units, relations
+        else:
+            return super().unknown_match_handler(content, argumentative_units, non_argumentative_units, relations, file, index)
+    
+    def parse(self, content: str, file: Path, **kwargs) -> ArgumentationInfo:
+        argumentative_units, relations, non_argumentative_units = super().parse(content, file, **kwargs)
+        relations_add = {
+            "relation_id": [], 
+            "relation_type": [], 
+            "prop_id_source": [], 
+            "prop_id_target": [],
+        }
+
+        relation_len = len(relations)
+        stance_relation_dict = {
+            'Against': "attacks",
+            'For': 'supports'
+        }
+        
+        # Add an attack or support relation to every MajorClaim from every Claim with a Stance
+        for _, rel_row in relations[relations['relation_id'] == -1].iterrows():
+            for _, arg_row in argumentative_units[argumentative_units['prop_type'] == "MajorClaim"].iterrows():
+                relations_add['relation_id'].append(relation_len + 1 + len(relations_add['relation_id']))
+                relations_add['relation_type'].append(stance_relation_dict[rel_row['stance_relation_type']])
+                relations_add['prop_id_source'].append(rel_row['prop_id_source'])
+                relations_add['prop_id_target'].append(arg_row['prop_id'])
+                
+        relations = relations.drop(relations[relations['relation_id'] == -1].index)
+        relations = pd.concat([relations, pd.DataFrame(relations_add)], ignore_index=True)
+        
+        return argumentative_units, relations, non_argumentative_units

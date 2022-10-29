@@ -1,5 +1,6 @@
 import logging
 import re
+from time import sleep
 from typing import Callable, Dict, Optional, Tuple
 from corpus_parser.conll_parser import ConllParser
 from pathlib import Path
@@ -123,6 +124,7 @@ class BaseDeepTranslator(Translator):
     def __init__(self, cache_file: Optional[Path]=None) -> None:
         super().__init__()
         self.cache_file = cache_file
+        self.max_retries = 5
         if not cache_file:
             self.cache_file = Path(__file__, "..", "..", "data", "translation", "translation_cache.json").resolve()
             if not self.cache_file.exists():
@@ -201,7 +203,19 @@ class BaseDeepTranslator(Translator):
         if cached_translated is not None:
             return cached_translated
         translator = self.get_translator(source_language, target_language)
-        target_sentence = translator.translate(source_sentence)
+        
+        for i in range(self.max_retries):
+            try:
+                target_sentence = translator.translate(source_sentence)
+                break
+            except Exception as e:
+                logging.warning(f"Error captured {e}. when translating {source_sentence}. Retrying...")
+                sleep(0.5)
+                if i == self.max_retries - 1:
+                    target_sentence = None
+        if target_sentence is None:
+            target_sentence = source_sentence
+            logging.warning(f"No translation found for {source_sentence}, defaulting to {target_sentence}")
         self.__save_cache(source_sentence, target_sentence, source_language, target_language)
         return target_sentence
 

@@ -75,6 +75,8 @@ if __name__ == "__main__":
         kwargs['middle_language'] = args.middle_language
         data_augmentator = TranslateDataAugmentator()
 
+    kwargs["use_spacy"] = True
+
     full_corpus_processing_pipeline(
         args.source_path,
         args.conll_parsed_path,

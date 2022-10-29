@@ -102,7 +102,7 @@ class SentenceAligner:
         with ThreadPoolExecutor(max_workers=self.max_worker) as exe:
             for i in range(self.max_worker):
                 futures.append(exe.submit(batch_work, i))
-                # batch_work(i)
+                # batch_work(i) # With this the result isn't returned
         wait(futures)
         exceptions = [future.exception() for future in futures if future.exception()]
         

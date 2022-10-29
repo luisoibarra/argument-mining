@@ -7,7 +7,7 @@ import re
 import logging as log
 from nltk.tokenize import word_tokenize, sent_tokenize
 from utils.spacy_utils import get_spacy_model
-
+import numpy as np
 
 ConllTagInfo = Dict[str, Union[str,int]]
 
@@ -50,11 +50,29 @@ class ConllParser(Parser):
                 sentences = [x.text for x in nlp(content).sents]
             else:
                 sentences = sent_tokenize(content, language=language)
-            for sentence in sentences:
-                for word in sentence.strip().split(" "):
-                    assert word == line_infos[index]["tok"]
-                    new_line_infos.append(line_infos[index])
-                    index += 1
+
+            prev_word_sentence_split = None
+            for i, sentence in enumerate(sentences):
+                words = sentence.strip().split(" ")
+                if prev_word_sentence_split:
+                    words[0] = prev_word_sentence_split + words[0]
+                    prev_word_sentence_split = None
+                for j, word in enumerate(words):
+                    if word != line_infos[index]["tok"]:
+                        if j == len(words) - 1 and i < len(sentences) - 1 and \
+                           word + sentences[i+1].strip().split(" ")[0] == line_infos[index]["tok"]:
+                            # Sentece splited in middle of a token and continues next
+                            prev_word_sentence_split = word
+                        else:
+                            # Raise exception
+                            assert word == line_infos[index]["tok"]
+                    else:
+                        new_line_infos.append(line_infos[index])
+                        index += 1
+
+                if prev_word_sentence_split is not None:
+                    continue
+
                 # Sentence separator
                 new_line_infos.append(self.__sent_separator)
             assert index == end
@@ -295,11 +313,14 @@ class ConllParser(Parser):
             all_units = pd.concat([argumentative_units, non_argumentative_units], sort=True)
             all_units.sort_values(by="prop_init", inplace=True)
             all_units = all_units.reindex(columns=["prop_id", "prop_type", "prop_init", "prop_end", "prop_text"])
+            all_units['prop_init'] = all_units['prop_init'].apply(np.int64)
+            all_units['prop_end'] = all_units['prop_end'].apply(np.int64)
             max_length = all_units["prop_end"].max()
             
             text = default_gap*max_length if exact_text else ""
             
             for index, (prop_id, prop_type, prop_init, prop_end, prop_text) in all_units.iterrows():
+                prop_id = int(prop_id) if pd.notna(prop_id) else prop_id
                 if self.use_spacy:
                     nlp = get_spacy_model(source_language)
                     doc = nlp(prop_text)

@@ -3,13 +3,13 @@ if __name__ == "__main__":
     from pathlib import Path
     path = str(Path(__file__, "..", "..").resolve())
     if path not in sys.path:
-        print(path)
         sys.path.insert(0, path)
 
 import argparse
+from corpus_parser.cdcp_parser import CDCPParser
 from corpus_parser.parser import Parser
 from corpus_parser.conll_parser import ConllParser
-from corpus_parser.brat_parser import BratParser
+from corpus_parser.brat_parser import BratParser, PersuasiveEssaysParser
 from corpus_parser.unified_parser import UnifiedParser
 from pathlib import Path
 from utils.argparser_utils import ChoiceArg, OptionalArg, PositionalArg, update_parser
@@ -32,7 +32,7 @@ choice_args = [
         name="parser",
         help="Select the type of parser to use",
         type=str,
-        values=("unified", "brat", "conll")
+        values=("unified", "brat", "conll", "persuasive", "cdcp")
     ),
     ChoiceArg(
         name="use_spacy",
@@ -66,6 +66,8 @@ def create_from_args(args) -> Parser:
         "unified": UnifiedParser(use_spacy=args.use_spacy),
         "brat": BratParser(),
         "conll": ConllParser(use_spacy=args.use_spacy),
+        "persuasive": PersuasiveEssaysParser(),
+        "cdcp": CDCPParser(),
     }[args.parser]
     
     return parser
@@ -76,7 +78,7 @@ def handle_from_args(args):
                      source_language=args.source_language, 
                      target_language=args.target_language)
 
-    conll = ConllParser(use_spacy=args.use_spacy) 
+    conll = ConllParser(use_spacy=args.use_spacy)
 
     conll.export_from_dataframes(args.conll_parsed_path, 
                                  df, 

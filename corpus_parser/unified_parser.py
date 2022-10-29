@@ -1,3 +1,5 @@
+import json
+from corpus_parser.cdcp_parser import CDCPParser
 import re
 from corpus_parser.brat_parser import BratParser
 from corpus_parser.conll_parser import ConllParser
@@ -16,10 +18,11 @@ class UnifiedParser(Parser):
     """
     
     
-    def __init__(self, accepted_files: Iterable[str] = (".conll", ".ann"), **kwargs) -> None:
+    def __init__(self, accepted_files: Iterable[str] = (".conll", ".ann", ".ann.json"), **kwargs) -> None:
         super().__init__(accepted_files, suffix=None)
         self.conll_parser = ConllParser(**kwargs)
         self.brat_parser = BratParser(**kwargs)
+        self.cdcp_parser = CDCPParser(**kwargs)
         self.selected_parser = None
     
     def __get_parser(self, content: str, file: Optional[Path] = None) -> Parser:
@@ -31,6 +34,8 @@ class UnifiedParser(Parser):
                 return self.conll_parser
             if file.suffix == ".ann":
                 return self.brat_parser
+            if file.name.endswith(".ann.json"):
+                return self.cdcp_parser
             raise Exception(f"Couldn't guess parser for file {file}")
         line = content.splitlines()[0]
         if self.brat_parser.argumentative_unit_regex.match(line) \
@@ -38,6 +43,11 @@ class UnifiedParser(Parser):
             return self.brat_parser
         if self.conll_parser.annotation_regex.match(line):
             return self.conll_parser
+        try:
+            json.loads(content)
+            return self.cdcp_parser
+        except:
+            pass
         raise Exception(f"Couldn't guess parser for line {line}")
         
     def parse(self, content: str, file: Optional[Path] = None, **kwargs) -> ArgumentationInfo:
