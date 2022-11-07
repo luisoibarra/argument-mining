@@ -90,7 +90,8 @@ def fix_tags(tags: List[str], verbose=True) -> List[str]:
     # Fixing BIOES tags without metatags
     tags = ["O", "O"] + tags + ["O"]
     range_errors = []
-    for i in range(len(tags) - 2):
+    i = 0
+    while i < len(tags) - 2:
         window = [t[0] for t in tags[i:i+3]] # Removing metatags
         error_importance = fix_window(window, i, tags, fix=False, verbose=verbose)
         
@@ -110,7 +111,9 @@ def fix_tags(tags: List[str], verbose=True) -> List[str]:
             value, i, window = range_errors[0]
             fix_window(window, i, tags, verbose=verbose)
             range_errors.clear()
-            
+            i -= 1
+        i += 1
+    
     if len(range_errors) == 1: # Can be 0 or 1
         value, i, window = range_errors[0]
         fix_window(window, i, tags, verbose=verbose)
