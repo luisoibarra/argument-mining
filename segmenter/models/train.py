@@ -34,6 +34,12 @@ choice_args = [
     #     type=str,
     #     values=("awesome_align", "fast_align")
     # ),
+    ChoiceArg(
+        name="create_corpus",
+        help="If the corpus must be created",
+        type=str,
+        values=("yes", "no")
+    ),
 ]
 
 optional_args = [
@@ -57,7 +63,8 @@ def handle_from_args(args: argparse.Namespace):
         })
     import importlib
     importlib.reload(segmenter_model)
-    segmenter_model.train_pipeline(segmenter_model.params)
+    create_corpus = arg_dict['create_corpus'] == "yes"
+    segmenter_model.train_pipeline(segmenter_model.params, create_corpus)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
