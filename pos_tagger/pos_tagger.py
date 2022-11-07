@@ -6,6 +6,9 @@ import nltk
 
 class POSTagger:
     
+    def __init__(self, name: str) -> None:
+        self.name = name
+    
     def pos_tags(self, tokens: List[str], language: str) -> List[str]:
         """
         Return the POS tags from `tokens`.
@@ -28,10 +31,16 @@ class POSTagger:
         """
         raise NotImplementedError()
     
+    def __str__(self) -> str:
+        return self.name
+    
+    def __repr__(self) -> str:
+        return str(self)
+    
 class SpacyPOSTagger(POSTagger):
     
     def __init__(self) -> None:
-        super().__init__()
+        super().__init__("spacy")
         self._spacy_to_universal = {
             "ADJ": "ADJ",
             "ADP": "ADP",
@@ -72,7 +81,7 @@ class NLTKPOSTagger(POSTagger):
         spanish_tagger: Wich type of tagger will be used in spanish. Can be
         `perceptron` or `spaghetti`
         """
-        super().__init__()
+        super().__init__("nltk")
         if spanish_tagger == "perceptron":
             self.spanish_tagger = CESSPerceptronTagger()
         elif spanish_tagger == "spaghetti":
