@@ -1,6 +1,7 @@
 from datetime import date
 from ..items import LetterToDirectionItem
 import scrapy
+import html2text
 
 
 class LettersToDirectionSpider(scrapy.Spider):
@@ -15,6 +16,10 @@ class LettersToDirectionSpider(scrapy.Spider):
         super().__init__(**kwargs)
         self.initial_page = int(initial_page)
         self.max_page = int(max_page)
+        self.html = html2text.HTML2Text()
+        self.html.ignore_links = True
+        self.html.ignore_emphasis = True
+        
 
     def start_requests(self):
         page = self.initial_page
@@ -32,7 +37,8 @@ class LettersToDirectionSpider(scrapy.Spider):
     def parse_letter(self, response):
 
         title = response.xpath('//h1[contains(@itemprop, "headline")]/text()').get()
-        texts = response.xpath('//div[contains(@itemprop, "articleBody")]/p/text()').getall()
+        texts = response.xpath('//div[contains(@itemprop, "articleBody")]').get()
+        texts = self.html.handle(texts)
         
         original_letter_link = None
         if response.xpath('//h3[contains(text(), "Responde a:")]'):
@@ -49,7 +55,7 @@ class LettersToDirectionSpider(scrapy.Spider):
 
         item = LetterToDirectionItem(
             title=title,
-            body="\n".join(texts),
+            body=texts,
             link=response.url,
             original_letter_link=original_letter_link,
             is_response=original_letter_link is not None,

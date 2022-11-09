@@ -6,3 +6,4 @@ tensorflow-addons~=0.17.1
 pipreqs~=0.4.11
 nbconvert~=6.5.0
 scrapy
+html2text

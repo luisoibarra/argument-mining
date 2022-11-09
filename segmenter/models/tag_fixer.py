@@ -49,7 +49,13 @@ def fix_error(pos, window, c_tag, tags, fix, verbose=True):
             tags[pos+1] = c_tag
         else:
             # Updating with metatags
-            tags[pos+1] = c_tag + tags[pos+1][1:]
+            if tags[pos+1] != "O":
+                tags[pos+1] = c_tag + tags[pos+1][1:]
+            elif tags[pos] != "O":
+                tags[pos+1] = c_tag + tags[pos][1:]
+            elif tags[pos-1] != "O":
+                tags[pos+1] = c_tag + tags[pos-1][1:]
+                
     return get_error_importance(window, c_tag)
 
 def fix_window(window, i, tags, fix=True, verbose=True):

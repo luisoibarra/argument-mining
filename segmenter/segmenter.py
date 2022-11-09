@@ -2,7 +2,6 @@ from concurrent.futures import Future, ThreadPoolExecutor, wait
 from pathlib import Path
 from typing import List, Tuple
 import random as rand
-from nltk import word_tokenize
 
 SplittedArgumentInfo = Tuple[str,str]
 
@@ -43,7 +42,6 @@ class ArgumentSegmenter:
         """
         
         content = source_file.read_text()
-        content = " ".join(word_tokenize(content, language=language))
         argument_info = self.extract_arguments_from_text(content)
         
         conll_dest_file = dest_directory / f"{source_file.name}.conll"

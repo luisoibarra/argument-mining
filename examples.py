@@ -2,6 +2,7 @@ from data_augmentation.translation_augmentation import DataAugmentator, Translat
 from link_prediction.link_predictor import LinkPredictor, RandomLinkPredictor
 from segmenter.segmenter import ArgumentSegmenter, RandomArgumentSegmenter
 from corpus_parser.unified_parser import UnifiedParser
+from segmenter.tf_segmenter import TensorflowArgumentSegmenter
 from sentence_aligner.sentence_aligner import SentenceAligner
 from sentence_aligner.translator import GoogleDeepTranslator, SelfTranslator, FromCorpusTranslator
 from corpus_parser.conll_parser import ConllParser
@@ -85,10 +86,11 @@ def corpus_processing_example():
 def link_processing_example():
     
     base_path = Path("data")
-    dataset_name = "testing"
-    # dataset_name = "persuasive_essays_sentence"
+    # dataset_name = "testing"
+    dataset_name = "persuasive_essays_paragraph_all_linked"
     # dataset_name = "testing_sentence"
     # dataset_name = "testing"
+    language = "spanish"
 
     segmenter_dir = Path(base_path, "to_process", dataset_name)
 
@@ -98,21 +100,24 @@ def link_processing_example():
     
     
     arg_tags = ["Claim", "MajorClaim", "Premise"]
-    segmenter = RandomArgumentSegmenter(arg_tags)
+    # segmenter = RandomArgumentSegmenter(arg_tags)
+    segmenter = TensorflowArgumentSegmenter(dataset_name, language)
+    ex = segmenter.extract_arguments_from_file(Path("data/to_process/granma_letters/2017-03-10|contesta-vivienda-de-guanabacoa|indolencia-e-ineficiencia-en-la-direccion-municipal-de-vivienda-de-guanabacoa.txt"), Path("."))
+    
     link_predictor = RandomLinkPredictor(
         arg_tags,
         ["", "support", "attack", "support_Inverse", "attack_Inverse"])
     
-    perform_full_inference_pipeline(
-        segmenter,
-        link_predictor,
-        segmenter_dir,
-        exported_segmenter_dir,
-        link_prediction_dir)
+    # perform_full_inference_pipeline(
+    #     segmenter,
+    #     link_predictor,
+    #     segmenter_dir,
+    #     exported_segmenter_dir,
+    #     link_prediction_dir)
 
 if __name__ == "__main__":
-    corpus_processing_example()
-    # link_processing_example()
+    # corpus_processing_example()
+    link_processing_example()
     
     # parse_corpus_pipeline(Path("code", "data", "corpus", "ArgumentAnnotatedEssays-2.0", "train-test-split", "dev"),
     #                       Path("code", "data", "parsed_to_conll", "ArgumentAnnotatedEssays-2.0", "dev"),
