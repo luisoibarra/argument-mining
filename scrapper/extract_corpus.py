@@ -1,7 +1,7 @@
 from pathlib import Path
 import json
 
-def export_letter_corpus(source_path: Path, dest_path: Path):
+def export_letter_corpus(source_path: Path, dest_path: Path, export_only_response_and_responded_letters=False):
     """
     Transform the letter json corpus into a txt corpus. The
     exported text will have the following name convention:
@@ -17,6 +17,9 @@ def export_letter_corpus(source_path: Path, dest_path: Path):
 
     jsons = [json.loads(x.read_text()) for x in source_path.rglob("*.json") if x.is_file() and x.name != "stats.json"]
     jsons_dict = {item['link']: item for item in jsons}
+    if export_only_response_and_responded_letters:
+        responded_letters = set(x['original_letter_link'] for x in jsons if x['original_letter_link'])
+        jsons_dict = {key: item for key, item in jsons_dict.items() if item['original_letter_link'] or item['link'] in responded_letters}
     
     for link, letter_item in jsons_dict.items():
         if letter_item['original_letter_link']:
@@ -38,9 +41,11 @@ def export_letter_corpus(source_path: Path, dest_path: Path):
         json.dump(letter_item, json_file.open("w"))
         
 if __name__ == "__main__":
+    export_only_response_and_responded_letters = True
+
     SOURCE_PATH = Path(__file__, "..", "granma", "data", "letters").resolve()
-    DEST_PATH = Path(__file__, "..", "..", "data", "to_process", "granma_letters").resolve()
-    
+    DEST_PATH = Path(__file__, "..", "..", "data", "to_process", "granma_letters_responded_response" if export_only_response_and_responded_letters else "granma_letters").resolve()
+
     DEST_PATH.mkdir(parents=True, exist_ok=True)
     
     export_letter_corpus(SOURCE_PATH, DEST_PATH)

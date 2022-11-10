@@ -29,11 +29,12 @@ class TensorflowLinkPredictor(LinkPredictor):
             importlib.reload(link_model)
 
         self.process_file = link_model.process_file
+        self.source_language = source_language
         self._params = link_model.params.copy()
         self.model = link_model.load_and_build_model_from_params(self._params)
 
-    def predict_links(self, content: str, file_key: str, source_language: str="spanish", **kwargs) -> str:
-        result = self.process_file(self._params, content, source_file=file_key, source_language=source_language)
+    def predict_links(self, content: str, file_key: str, **kwargs) -> str:
+        result = self.process_file(self._params, content, source_file=file_key, source_language=self.source_language)
         return result
     
     def links_from_arguments(self, source_argument: str, target_argument: str, distance: int) -> Tuple[str, str, str]:
