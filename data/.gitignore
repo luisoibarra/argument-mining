@@ -12,6 +12,23 @@
 
 !/corpus/testing/
 
+!/corpus/persuasive_essays_paragraph_all_linked/
+/corpus/persuasive_essays_paragraph_all_linked/*
+!/corpus/persuasive_essays_paragraph_all_linked/dev/
+!/corpus/persuasive_essays_paragraph_all_linked/test/
+!/corpus/persuasive_essays_paragraph_all_linked/train/
+
+!/corpus/abstrct/
+/corpus/abstrct/*
+!/corpus/abstrct/dev/
+!/corpus/abstrct/test/
+!/corpus/abstrct/train/
+
+!/corpus/cdcp/
+/corpus/cdcp/*
+!/corpus/cdcp/dev/
+!/corpus/cdcp/test/
+!/corpus/cdcp/train/
 
 !/bidirectional_alignment/
 /bidirectional_alignment/*
