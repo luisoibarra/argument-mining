@@ -147,15 +147,18 @@ class BratParser(Parser):
             all_units = pd.concat([argumentative_units, non_argumentative_units], ignore_index=True)
             all_units.sort_values(by="prop_init", inplace=True)
             all_units = all_units.reindex(columns=["prop_id", "prop_type", "prop_init", "prop_end", "prop_text"])
-            max_length = all_units["prop_end"].max()
+            max_length = int(all_units["prop_end"].max())
             
             text = default_gap*max_length
             
             for index, (prop_id, prop_type, prop_init, prop_end, prop_text) in all_units.iterrows():
+                prop_init = int(prop_init)
+                prop_end = int(prop_end)
                 text = text[:prop_init] + prop_text + text[prop_end:]
                 if pd.notna(prop_id) and pd.notna(prop_type):
+                    prop_id = int(prop_id)
                     to_write = argumentative_format.format_map({
-                        "prop_id": int(prop_id),
+                        "prop_id": prop_id,
                         "prop_type": prop_type,
                         "prop_init": prop_init,
                         "prop_end": prop_end,
@@ -166,8 +169,11 @@ class BratParser(Parser):
             relations = relations.reindex(columns=["relation_id", "relation_type", "prop_id_source", "prop_id_target"])
             
             for index, (relation_id, relation_type, prop_id_source, prop_id_target) in relations.iterrows():
+                relation_id = int(relation_id)
+                prop_id_source = int(prop_id_source)
+                prop_id_target = int(prop_id_target)
                 to_write = relation_format.format_map({
-                    "relation_id": int(relation_id),
+                    "relation_id": relation_id,
                     "relation_type": relation_type,
                     "prop_id_source": prop_id_source,
                     "prop_id_target": prop_id_target,

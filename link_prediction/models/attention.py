@@ -97,6 +97,57 @@ def create_sum_fn(axis):
     func.__name__ = "sumalong_" + str(axis)
     return func
 
+def apply_multihead_attention(source_layers, target_layers, num_head, key_dim, regularizer, dropout, feedforward_dim):
+    
+    source_attention = layers.MultiHeadAttention(
+        num_heads=num_head, 
+        key_dim=key_dim,
+        kernel_regularizer=regularizer,
+        bias_regularizer=regularizer,
+        dropout=dropout,
+    )
+    target_attention = layers.MultiHeadAttention(
+        num_heads=num_head, 
+        key_dim=key_dim,
+        kernel_regularizer=regularizer,
+        bias_regularizer=regularizer,
+        dropout=dropout,
+    )
+
+    source_query = layers.GlobalAveragePooling1D()(target_layers)
+    target_query = layers.GlobalAveragePooling1D()(source_layers)
+    
+    source_query = layers.Reshape(target_shape=(1, source_query.shape[-1]))(source_query)
+    target_query = layers.Reshape(target_shape=(1, target_query.shape[-1]))(target_query)
+    
+    source_layers = source_attention(source_query, source_layers)
+    target_layers = target_attention(target_query, target_layers)
+    
+    source_layers = source_layers + source_query
+    target_layers = target_layers + target_query
+    
+    source_layers = layers.LayerNormalization()(source_layers)
+    target_layers = layers.LayerNormalization()(target_layers)
+    
+    source_layers = source_layers + tf.keras.Sequential([
+          tf.keras.layers.Dense(feedforward_dim, activation='relu'),
+          tf.keras.layers.Dense(source_layers.shape[-1]),
+          tf.keras.layers.Dropout(dropout)
+    ])(source_layers)
+    target_layers = target_layers + tf.keras.Sequential([
+          tf.keras.layers.Dense(feedforward_dim, activation='relu'),
+          tf.keras.layers.Dense(target_layers.shape[-1]),
+          tf.keras.layers.Dropout(dropout)
+    ])(target_layers)
+    
+    source_layers = layers.LayerNormalization()(source_layers)
+    target_layers = layers.LayerNormalization()(target_layers)
+    
+    source_layers = layers.Reshape(target_shape=(source_layers.shape[-1],))(source_query)
+    target_layers = layers.Reshape(target_shape=(target_layers.shape[-1],))(target_query)
+    
+    return source_layers, target_layers
+    
 def apply_attention(source_input, target_input, prev_source_layer, prev_target_layer, source_layers, target_layers, embedding_size, index):
     
     # create keys using dense layer
@@ -112,19 +163,8 @@ def apply_attention(source_input, target_input, prev_source_layer, prev_target_l
     target_avg = layers.GlobalAveragePooling1D(name=f"avg_query_target_{index}")(target_layers)
 
     # Original code. Problems when saving the model
-    # source_query = source_linearity(target_avg)
-    # target_query = source_linearity(source_avg)
-    
-    # Code added to fix the problem.
-    querys_linear_source = layers.Dense(
-        units=embedding_size,
-        name=f'att_linearity_query_source_{index}')
-    querys_linear_target = layers.Dense(
-        units=embedding_size,
-        name=f'att_linearity_query_target_{index}')
-    
-    source_query = querys_linear_source(target_avg)
-    target_query = querys_linear_target(source_avg)
+    source_query = source_linearity(target_avg)
+    target_query = target_linearity(source_avg) # <-- FIXED. Changed to target_linearity instead source_linearity 
     
     time_shape = (source_keys.shape)[1]
     space_shape = (source_keys.shape)[2]

@@ -115,9 +115,29 @@ def link_processing_example():
     #     exported_segmenter_dir,
     #     link_prediction_dir)
 
+def export_brat_example():
+    
+    INFO_TAG = "persuasive_essays_paragraph_all_linked"
+    # INFO_TAG = "cdcp"
+    # INFO_TAG = "abstrct"
+
+    # PROCESS_TAG = "responded_granma_letters"
+    # PROCESS_TAG = "response_responded_granma_letters"
+    PROCESS_TAG = "selected_response_responded_granma_letters"
+
+    BASE_DATA = Path("data")
+    BRAT = Path("brat", "data", PROCESS_TAG, INFO_TAG)
+
+    LINK_PREDICTION = BASE_DATA / 'link_prediction_processed' / INFO_TAG / PROCESS_TAG
+    
+    dataframes_dict = ConllParser(bioes=True).parse_dir(LINK_PREDICTION)
+    BratParser().export_from_dataframes(BRAT, dataframes_dict)
+
+
 if __name__ == "__main__":
     # corpus_processing_example()
-    link_processing_example()
+    # link_processing_example()
+    export_brat_example()
     
     # parse_corpus_pipeline(Path("code", "data", "corpus", "ArgumentAnnotatedEssays-2.0", "train-test-split", "dev"),
     #                       Path("code", "data", "parsed_to_conll", "ArgumentAnnotatedEssays-2.0", "dev"),

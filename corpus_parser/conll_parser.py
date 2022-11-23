@@ -204,6 +204,7 @@ class ConllParser(Parser):
                     current += 1
                     
                 if self.bioes:
+                    proposition = propositions[current]
                     if current >= len(propositions) or propositions[current]["bio_tag"] != "E":
                         if file:
                             log.warning(f"File {file.name}. Proposition '{proposition['tok']}' at index {current} doesn't end with an E")
