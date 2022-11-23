@@ -1,0 +1,32 @@
+Incluya	B-policy
+llamadas	I-policy
+a	I-policy
+familiares	I-policy
+y	I-policy
+amigos	I-policy
+del	I-policy
+deudor	I-policy
+.	I-policy
+
+Con	O
+frecuencia	B-testimony-reasons--1
+nos	I-testimony-reasons--1
+llaman	I-testimony-reasons--1
+para	I-testimony-reasons--1
+pasar	I-testimony-reasons--1
+mensajes	I-testimony-reasons--1
+a	I-testimony-reasons--1
+personas	I-testimony-reasons--1
+que	I-testimony-reasons--1
+tienen	I-testimony-reasons--1
+nuestro	I-testimony-reasons--1
+apellido	I-testimony-reasons--1
+,	I-testimony-reasons--1
+algunas	I-testimony-reasons--1
+de	I-testimony-reasons--1
+las	I-testimony-reasons--1
+cuales	I-testimony-reasons--1
+no	I-testimony-reasons--1
+conocemos	I-testimony-reasons--1
+.	I-testimony-reasons--1
+

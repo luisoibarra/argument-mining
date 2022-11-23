@@ -1,0 +1,47 @@
+No	O
+me	B-value
+importa	I-value
+el	I-value
+cónyuge	I-value
+.	I-value
+
+Quiero	B-fact-reasons--1-reasons-1
+decir	I-fact-reasons--1-reasons-1
+,	I-fact-reasons--1-reasons-1
+ella	I-fact-reasons--1-reasons-1
+es	I-fact-reasons--1-reasons-1
+mi	I-fact-reasons--1-reasons-1
+esposa	I-fact-reasons--1-reasons-1
+,	O
+así	B-value
+que	I-value
+no	I-value
+veo	I-value
+por	I-value
+qué	I-value
+no	I-value
+.	I-value
+
+Pero	B-value
+no	I-value
+estoy	I-value
+de	I-value
+acuerdo	I-value
+con	I-value
+novias	I-value
+o	I-value
+novios	I-value
+para	I-value
+aquellos	I-value
+que	I-value
+no	I-value
+tienen	I-value
+cónyuge	I-value
+.	I-value
+
+El	B-value
+cónyuge	I-value
+está	I-value
+bien	I-value
+.	I-value
+

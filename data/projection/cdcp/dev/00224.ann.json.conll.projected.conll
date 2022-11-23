@@ -1,0 +1,43 @@
+No	B-value
+,	I-value
+ni	I-value
+siquiera	I-value
+está	I-value
+claro	I-value
+quién	I-value
+es	I-value
+un	I-value
+cobrador	I-value
+de	I-value
+deudas	I-value
+,	I-value
+particularmente	I-value
+bajo	I-value
+la	I-value
+ley	I-value
+de	I-value
+CA	I-value
+.	I-value
+
+La	B-fact-reasons--1
+persona	I-fact-reasons--1
+que	I-fact-reasons--1
+envía	I-fact-reasons--1
+el	I-fact-reasons--1
+aviso	I-fact-reasons--1
+de	I-fact-reasons--1
+validación	I-fact-reasons--1
+suele	I-fact-reasons--1
+ser	I-fact-reasons--1
+un	I-fact-reasons--1
+cobrador	I-fact-reasons--1
+de	I-fact-reasons--1
+deudas	I-fact-reasons--1
+.	I-fact-reasons--1
+
+Esto	B-value
+solo	I-value
+causa	I-value
+confusión	I-value
+.	I-value
+

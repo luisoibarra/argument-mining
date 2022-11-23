@@ -1,0 +1,41 @@
+Eso	B-value
+es	I-value
+negocio	I-value
+.	I-value
+
+Los	B-value
+cobradores	I-value
+de	I-value
+deudas	I-value
+(	I-value
+pequeños	I-value
+,	I-value
+medianos	I-value
+y	I-value
+grandes	I-value
+)	I-value
+conocen	I-value
+el	I-value
+costo	I-value
+de	I-value
+hacer	I-value
+negocios	I-value
+.	I-value
+
+Y	B-policy
+si	I-policy
+no	I-policy
+lo	I-policy
+saben	I-policy
+,	I-policy
+entonces	I-policy
+necesitan	I-policy
+encontrar	I-policy
+una	I-policy
+nueva	I-policy
+“	I-policy
+carrera	I-policy
+”	I-policy
+.	I-policy
+``	O
+

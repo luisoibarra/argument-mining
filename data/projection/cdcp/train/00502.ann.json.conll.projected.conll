@@ -1,0 +1,38 @@
+No	B-value
+creo	I-value
+que	I-value
+estemos	I-value
+discutiendo	I-value
+cómo	I-value
+impedir	I-value
+que	I-value
+un	I-value
+cobrador	I-value
+lo	I-value
+llame	I-value
+.	I-value
+
+No	B-policy
+debería	I-policy
+sentir	I-policy
+que	I-policy
+tiene	I-policy
+que	I-policy
+``	I-policy
+bloquear	I-policy
+''	I-policy
+una	I-policy
+llamada	I-policy
+.	I-policy
+
+Solo	B-policy-reasons--1
+debe	I-policy-reasons--1
+contestar	I-policy-reasons--1
+y	I-policy-reasons--1
+pedirles	I-policy-reasons--1
+que	I-policy-reasons--1
+no	I-policy-reasons--1
+lo	I-policy-reasons--1
+llamen	I-policy-reasons--1
+.	I-policy-reasons--1
+

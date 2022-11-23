@@ -1,0 +1,50 @@
+Estoy	B-value
+de	I-value
+acuerdo	I-value
+con	I-value
+MER	I-value
+.	I-value
+
+Tengo	B-testimony
+experiencia	I-testimony
+como	I-testimony
+deudor	I-testimony
+,	I-testimony
+abogado	I-testimony
+pro-bono	I-testimony
+y	I-testimony
+cobrador	I-testimony
+de	I-testimony
+deudas	I-testimony
+.	I-testimony
+
+No	B-value
+puede	I-value
+esperar	I-value
+que	I-value
+los	I-value
+coleccionistas	I-value
+sean	I-value
+jueces	I-value
+o	I-value
+jurados	I-value
+.	I-value
+
+El	B-value
+derecho	I-value
+a	I-value
+cesar	I-value
+la	I-value
+comunicación	I-value
+tiene	I-value
+por	I-value
+objeto	I-value
+obligar	I-value
+al	I-value
+cobrador	I-value
+a	I-value
+demandar	I-value
+o	I-value
+marcharse	I-value
+.	I-value
+

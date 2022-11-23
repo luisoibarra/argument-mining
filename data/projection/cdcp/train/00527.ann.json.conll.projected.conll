@@ -1,0 +1,43 @@
+A	O
+menudo	B-testimony
+me	I-testimony
+doy	I-testimony
+cuenta	I-testimony
+de	I-testimony
+que	I-testimony
+algunos	I-testimony
+bancos	I-testimony
+no	I-testimony
+permiten	I-testimony
+que	I-testimony
+sus	I-testimony
+agencias	I-testimony
+acepten	I-testimony
+tarjetas	I-testimony
+de	I-testimony
+débito	I-testimony
+o	I-testimony
+crédito	I-testimony
+.	I-testimony
+
+Todas	B-policy
+las	I-policy
+agencias	I-policy
+deben	I-policy
+aceptar	I-policy
+pagos	I-policy
+con	I-policy
+débito	I-policy
+y	I-policy
+crédito	I-policy
+.	I-policy
+
+Es	B-value
+como	I-value
+si	I-value
+estuvieran	I-value
+atrapados	I-value
+en	I-value
+1950	I-value
+.	I-value
+

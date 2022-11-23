@@ -1,0 +1,50 @@
+Necesito	B-value
+un	I-value
+número	I-value
+para	I-value
+mostrar	I-value
+.	I-value
+
+Deja	B-policy
+de	I-policy
+bloquear	I-policy
+tu	I-policy
+número	I-policy
+y	I-policy
+deja	I-policy
+de	I-policy
+usar	I-policy
+números	I-policy
+800	I-policy
+.	I-policy
+
+Para	B-fact-reasons--1
+mí	I-fact-reasons--1
+,	I-fact-reasons--1
+los	I-fact-reasons--1
+números	I-fact-reasons--1
+800	I-fact-reasons--1
+son	I-fact-reasons--1
+de	I-fact-reasons--1
+vendedores	I-fact-reasons--1
+o	I-fact-reasons--1
+abogados	I-fact-reasons--1
+.	I-fact-reasons--1
+
+Quiero	B-value-reasons-1
+saber	I-value-reasons-1
+que	I-value-reasons-1
+tengo	I-value-reasons-1
+una	I-value-reasons-1
+deuda	I-value-reasons-1
+en	I-value-reasons-1
+cobranzas	I-value-reasons-1
+.	I-value-reasons-1
+
+Así	B-policy
+que	I-policy
+no	I-policy
+te	I-policy
+escondas	I-policy
+.	I-policy
+

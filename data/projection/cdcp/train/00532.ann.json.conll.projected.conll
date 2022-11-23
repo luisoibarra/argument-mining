@@ -1,0 +1,61 @@
+Eso	B-value
+es	I-value
+una	I-value
+locura	I-value
+.	I-value
+
+Mi	B-testimony
+mamá	I-testimony
+escuchó	I-testimony
+uno	I-testimony
+cuando	I-testimony
+estaba	I-testimony
+escuchando	I-testimony
+mis	I-testimony
+mensajes	I-testimony
+de	I-testimony
+voz	I-testimony
+en	I-testimony
+casa	I-testimony
+.	I-testimony
+
+Solo	B-policy
+deben	I-policy
+divulgar	I-policy
+a	I-policy
+través	I-policy
+de	I-policy
+mensajes	I-policy
+de	I-policy
+texto	I-policy
+.	I-policy
+
+Los	O
+textos	B-fact-reasons--1
+no	I-fact-reasons--1
+son	I-fact-reasons--1
+algo	I-fact-reasons--1
+que	I-fact-reasons--1
+otros	I-fact-reasons--1
+escucharán	I-fact-reasons--1
+.	I-fact-reasons--1
+
+¡Ese	B-value
+mensaje	I-value
+tan	I-value
+largo	I-value
+diciendo	I-value
+que	I-value
+son	I-value
+cobradores	I-value
+y	I-value
+tratando	I-value
+de	I-value
+cobrar	I-value
+una	I-value
+deuda	I-value
+es	I-value
+ridículo	I-value
+!	I-value
+!	I-value
+

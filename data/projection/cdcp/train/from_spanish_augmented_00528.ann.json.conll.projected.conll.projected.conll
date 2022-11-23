@@ -1,0 +1,27 @@
+Los	O
+mensajes	O
+de	O
+texto	B-value
+no	I-value
+funcionarán	I-value
+para	I-value
+los	I-value
+consumidores	I-value
+.	I-value
+
+Los	O
+consumidores	B-fact-reasons--1
+deben	I-fact-reasons--1
+pagar	I-fact-reasons--1
+por	I-fact-reasons--1
+los	I-fact-reasons--1
+mensajes	I-fact-reasons--1
+de	I-fact-reasons--1
+texto	I-fact-reasons--1
+y	B-fact-reasons--2
+esto	I-fact-reasons--2
+ya	I-fact-reasons--2
+es	I-fact-reasons--2
+ilegal	I-fact-reasons--2
+.	I-fact-reasons--2
+

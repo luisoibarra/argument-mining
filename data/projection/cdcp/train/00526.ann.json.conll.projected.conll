@@ -1,0 +1,84 @@
+No	B-value
+entiendo	I-value
+por	I-value
+qué	I-value
+los	I-value
+cobradores	I-value
+están	I-value
+tan	I-value
+atascados	I-value
+en	I-value
+la	I-value
+antigüedad	I-value
+.	I-value
+
+Recibo	B-value
+tantas	I-value
+llamadas	I-value
+y	I-value
+es	I-value
+molesto	I-value
+.	I-value
+
+Prefiero	B-value
+recibir	I-value
+un	I-value
+mensaje	I-value
+de	I-value
+texto	I-value
+o	I-value
+un	I-value
+correo	I-value
+electrónico	I-value
+.	I-value
+
+El	B-fact-reasons--1-reasons-2
+timbre	I-fact-reasons--1-reasons-2
+del	I-fact-reasons--1-reasons-2
+teléfono	I-fact-reasons--1-reasons-2
+puede	I-fact-reasons--1-reasons-2
+ser	I-fact-reasons--1-reasons-2
+molesto	I-fact-reasons--1-reasons-2
+y	I-fact-reasons--1-reasons-2
+un	I-fact-reasons--1-reasons-2
+mensaje	I-fact-reasons--1-reasons-2
+de	I-fact-reasons--1-reasons-2
+texto	I-fact-reasons--1-reasons-2
+es	I-fact-reasons--1-reasons-2
+más	I-fact-reasons--1-reasons-2
+sutil	I-fact-reasons--1-reasons-2
+.	I-fact-reasons--1-reasons-2
+
+Tampoco	B-fact-reasons--2-reasons-1
+requiere	I-fact-reasons--2-reasons-1
+que	I-fact-reasons--2-reasons-1
+escuche	I-fact-reasons--2-reasons-1
+un	I-fact-reasons--2-reasons-1
+mensaje	I-fact-reasons--2-reasons-1
+de	I-fact-reasons--2-reasons-1
+voz	I-fact-reasons--2-reasons-1
+prolongado	I-fact-reasons--2-reasons-1
+.	I-fact-reasons--2-reasons-1
+
+Preferiría	B-value
+recibir	I-value
+un	I-value
+mensaje	I-value
+de	I-value
+texto	I-value
+diciendo	I-value
+quiénes	I-value
+son	I-value
+y	I-value
+qué	I-value
+quieren	I-value
+.	I-value
+
+Si	B-policy
+no	I-policy
+respondo	I-policy
+pronto	I-policy
+,	I-policy
+llámame	I-policy
+.	I-policy
+

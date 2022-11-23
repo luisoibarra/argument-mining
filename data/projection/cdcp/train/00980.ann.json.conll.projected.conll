@@ -1,0 +1,64 @@
+Tengo	B-testimony
+exactamente	I-testimony
+el	I-testimony
+mismo	I-testimony
+problema	I-testimony
+.	I-testimony
+
+He	B-testimony
+tenido	I-testimony
+este	I-testimony
+problema	I-testimony
+durante	I-testimony
+más	I-testimony
+de	I-testimony
+20	I-testimony
+años	I-testimony
+.	I-testimony
+
+No	B-testimony-reasons-1
+puedo	I-testimony-reasons-1
+decirle	I-testimony-reasons-1
+cuántas	I-testimony-reasons-1
+veces	I-testimony-reasons-1
+le	I-testimony-reasons-1
+he	I-testimony-reasons-1
+dicho	I-testimony-reasons-1
+a	I-testimony-reasons-1
+la	I-testimony-reasons-1
+persona	I-testimony-reasons-1
+al	I-testimony-reasons-1
+otro	I-testimony-reasons-1
+lado	I-testimony-reasons-1
+de	I-testimony-reasons-1
+la	I-testimony-reasons-1
+línea	I-testimony-reasons-1
+que	I-testimony-reasons-1
+la	I-testimony-reasons-1
+persona	I-testimony-reasons-1
+que	I-testimony-reasons-1
+están	I-testimony-reasons-1
+buscando	I-testimony-reasons-1
+NUNCA	I-testimony-reasons-1
+ha	I-testimony-reasons-1
+vivido	I-testimony-reasons-1
+aquí	I-testimony-reasons-1
+y	I-testimony-reasons-1
+no	I-testimony-reasons-1
+es	I-testimony-reasons-1
+un	I-testimony-reasons-1
+pariente	I-testimony-reasons-1
+.	I-testimony-reasons-1
+
+Seguro	O
+que	B-value
+es	I-value
+repugnante	I-value
+.	I-value
+
+No	B-value
+sé	I-value
+qué	I-value
+hacer	I-value
+.	I-value
+

@@ -1,0 +1,26 @@
+El	O
+robo	O
+de	O
+identidad	B-fact
+encabeza	I-fact
+la	I-fact
+lista	I-fact
+por	I-fact
+decimotercer	I-fact
+año	I-fact
+consecutivo	I-fact
+en	I-fact
+el	I-fact
+Informe	I-fact
+Nacional	I-fact
+de	I-fact
+Quejas	I-fact
+de	I-fact
+los	I-fact
+Consumidores	I-fact
+_	B-reference-evidences--1
+_	I-reference-evidences--1
+URL	I-reference-evidences--1
+_	I-reference-evidences--1
+_	I-reference-evidences--1
+

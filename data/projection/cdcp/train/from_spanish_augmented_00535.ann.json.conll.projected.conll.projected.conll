@@ -1,0 +1,95 @@
+¡	B-fact
+Mira	I-fact
+,	I-fact
+es	I-fact
+2013	I-fact
+!	I-fact
+
+Ignorar	B-value
+las	I-value
+llamadas	I-value
+telefónicas	I-value
+es	I-value
+molesto	I-value
+y	B-value
+ver	I-value
+constantemente	I-value
+llamadas	I-value
+perdidas	I-value
+es	I-value
+agravante	I-value
+.	I-value
+
+¿Por	B-value
+qué	I-value
+los	I-value
+coleccionistas	I-value
+están	I-value
+atrapados	I-value
+en	I-value
+la	I-value
+antigüedad	I-value
+?	I-value
+
+Escríbeme	B-policy
+!	I-policy
+!	I-policy
+
+Envíame	B-policy
+un	I-policy
+correo	I-policy
+electrónico	I-policy
+!	I-policy
+!	I-policy
+
+Esas	B-value-reasons--2-reasons--1
+llamadas	I-value-reasons--2-reasons--1
+telefónicas	I-value-reasons--2-reasons--1
+no	I-value-reasons--2-reasons--1
+las	I-value-reasons--2-reasons--1
+van	I-value-reasons--2-reasons--1
+a	I-value-reasons--2-reasons--1
+contestar	I-value-reasons--2-reasons--1
+porque	B-testimony-reasons--1
+trabajo	I-testimony-reasons--1
+y	I-testimony-reasons--1
+tengo	I-testimony-reasons--1
+hijos	I-testimony-reasons--1
+.	I-testimony-reasons--1
+
+La	O
+comunicación	B-value
+con	I-value
+ellos	I-value
+sería	I-value
+mucho	I-value
+más	I-value
+fácil	I-value
+si	I-value
+pudiera	I-value
+enviar	I-value
+mensajes	I-value
+de	I-value
+texto	I-value
+y	I-value
+correos	I-value
+electrónicos	I-value
+a	I-value
+estas	I-value
+personas	I-value
+.	I-value
+
+¡En	O
+serio	B-fact
+,	I-fact
+esto	I-fact
+no	I-fact
+es	I-fact
+1950	I-fact
+en	I-fact
+lo	I-fact
+que	I-fact
+vivimos	I-fact
+!	I-fact
+!	I-fact
+

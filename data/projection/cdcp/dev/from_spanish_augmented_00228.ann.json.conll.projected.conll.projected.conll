@@ -1,0 +1,34 @@
+No	B-policy
+debería	I-policy
+existir	I-policy
+la	I-policy
+opción	I-policy
+de	I-policy
+intentar	I-policy
+verificar	I-policy
+la	I-policy
+deuda	I-policy
+.	I-policy
+
+Los	B-policy-reasons--1
+intentos	I-policy-reasons--1
+siempre	I-policy-reasons--1
+deben	I-policy-reasons--1
+ser	I-policy-reasons--1
+requeridos	I-policy-reasons--1
+y	B-value
+si	I-value
+no	I-value
+se	I-value
+hace	I-value
+la	I-value
+verificación	I-value
+,	I-value
+la	I-value
+deuda	I-value
+no	I-value
+puede	I-value
+transferirse	I-value
+más	I-value
+.	I-value
+

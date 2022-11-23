@@ -1,0 +1,64 @@
+No	B-value
+sucede	I-value
+``	I-value
+ocasionalmente	I-value
+''	I-value
+.	I-value
+
+Pasa	B-value-reasons--1
+todo	I-value-reasons--1
+el	I-value-reasons--1
+tiempo	I-value-reasons--1
+.	I-value-reasons--1
+
+Aquellos	B-value
+de	I-value
+nosotros	I-value
+con	I-value
+nombres	I-value
+comunes	I-value
+somos	I-value
+presa	I-value
+fácil	I-value
+para	I-value
+estos	I-value
+cabrones	I-value
+.	I-value
+
+Me	B-testimony-evidences--1
+acosan	I-testimony-evidences--1
+constantemente	I-testimony-evidences--1
+los	I-testimony-evidences--1
+coleccionistas	I-testimony-evidences--1
+que	I-testimony-evidences--1
+buscan	I-testimony-evidences--1
+a	I-testimony-evidences--1
+otra	I-testimony-evidences--1
+persona	I-testimony-evidences--1
+.	I-testimony-evidences--1
+
+Los	O
+programas	B-fact-reasons-1
+de	I-fact-reasons-1
+bloqueo	I-fact-reasons-1
+de	I-fact-reasons-1
+llamadas	I-fact-reasons-1
+no	I-fact-reasons-1
+funcionan	I-fact-reasons-1
+fuera	I-fact-reasons-1
+del	I-fact-reasons-1
+área	I-fact-reasons-1
+,	I-fact-reasons-1
+por	B-value
+lo	I-value
+que	I-value
+el	I-value
+bloqueo	I-value
+de	I-value
+llamadas	I-value
+no	I-value
+es	I-value
+ninguna	I-value
+protección	I-value
+.	I-value
+

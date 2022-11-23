@@ -1,0 +1,77 @@
+En	B-fact
+este	I-fact
+momento	I-fact
+,	I-fact
+los	I-fact
+cobradores	I-fact
+están	I-fact
+legalmente	I-fact
+obligados	I-fact
+a	I-fact
+detener	I-fact
+el	I-fact
+contacto	I-fact
+telefónico	I-fact
+cuando	I-fact
+el	I-fact
+consumidor	I-fact
+lo	I-fact
+notifique	I-fact
+.	I-fact
+
+No	B-fact
+se	I-fact
+detienen	I-fact
+.	I-fact
+
+Y	B-fact
+la	I-fact
+ley	I-fact
+no	I-fact
+se	I-fact
+cumple	I-fact
+.	I-fact
+
+Reportar	B-fact
+violaciones	I-fact
+a	I-fact
+los	I-fact
+reguladores	I-fact
+simplemente	I-fact
+lleva	I-fact
+al	I-fact
+denunciante	I-fact
+a	I-fact
+algún	I-fact
+tipo	I-fact
+de	I-fact
+base	I-fact
+de	I-fact
+datos	I-fact
+,	I-fact
+y	B-value
+nunca	I-value
+más	I-value
+se	I-value
+sabe	I-value
+de	I-value
+los	I-value
+reguladores	I-value
+.	I-value
+
+Hay	B-value
+leyes	I-value
+decentes	I-value
+en	I-value
+los	I-value
+libros	I-value
+.	I-value
+
+Es	B-value
+la	I-value
+aplicación	I-value
+la	I-value
+que	I-value
+falla	I-value
+.	I-value
+

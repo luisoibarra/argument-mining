@@ -1,0 +1,35 @@
+Estoy	B-value
+al	I-value
+tanto	I-value
+de	I-value
+eso	I-value
+,	I-value
+pero	B-value-reasons-1
+no	I-value-reasons-1
+creo	I-value-reasons-1
+que	I-value-reasons-1
+muchas	I-value-reasons-1
+cortes	I-value-reasons-1
+de	I-value-reasons-1
+apelaciones	I-value-reasons-1
+hayan	I-value-reasons-1
+considerado	I-value-reasons-1
+el	I-value-reasons-1
+tema	I-value-reasons-1
+.	I-value-reasons-1
+
+Para	B-policy
+confirmar	I-policy
+que	I-policy
+es	I-policy
+la	I-policy
+ley	I-policy
+,	I-policy
+debe	I-policy
+estar	I-policy
+incluida	I-policy
+en	I-policy
+una	I-policy
+regla	I-policy
+.	I-policy
+

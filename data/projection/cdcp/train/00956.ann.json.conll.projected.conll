@@ -1,0 +1,43 @@
+No	B-testimony
+me	I-testimony
+comunico	I-testimony
+con	I-testimony
+nadie	I-testimony
+a	I-testimony
+quien	I-testimony
+le	I-testimony
+debo	I-testimony
+dinero	I-testimony
+por	I-testimony
+teléfono	I-testimony
+.	I-testimony
+
+Quiero	B-value-reasons--1-reasons-2
+un	I-value-reasons--1-reasons-2
+rastro	I-value-reasons--1-reasons-2
+escrito	I-value-reasons--1-reasons-2
+.	I-value-reasons--1-reasons-2
+
+Es	B-value-reasons--1-reasons-1
+demasiado	I-value-reasons--1-reasons-1
+fácil	I-value-reasons--1-reasons-1
+para	I-value-reasons--1-reasons-1
+ellos	I-value-reasons--1-reasons-1
+decir	I-value-reasons--1-reasons-1
+que	I-value-reasons--1-reasons-1
+acepté	I-value-reasons--1-reasons-1
+algo	I-value-reasons--1-reasons-1
+o	I-value-reasons--1-reasons-1
+darme	I-value-reasons--1-reasons-1
+información	I-value-reasons--1-reasons-1
+engañosa	I-value-reasons--1-reasons-1
+por	I-value-reasons--1-reasons-1
+teléfono	I-value-reasons--1-reasons-1
+.	I-value-reasons--1-reasons-1
+
+LO	O
+QUIERO	O
+POR	B-value-reasons--3
+CORREO	I-value-reasons--3
+.	I-value-reasons--3
+

@@ -1,0 +1,42 @@
+Inocente	B-fact
+hasta	I-fact
+que	I-fact
+se	I-fact
+pruebe	I-fact
+su	I-fact
+culpabilidad	I-fact
+es	I-fact
+el	I-fact
+Sistema	I-fact
+de	I-fact
+Justicia	I-fact
+Americano	I-fact
+.	I-fact
+
+Y	B-fact
+la	I-fact
+carga	I-fact
+de	I-fact
+la	I-fact
+prueba	I-fact
+es	I-fact
+del	I-fact
+que	I-fact
+demanda	I-fact
+.	I-fact
+
+Los	O
+cobradores	B-policy
+de	I-policy
+deudas	I-policy
+deben	I-policy
+actuar	I-policy
+juntos	I-policy
+antes	I-policy
+de	I-policy
+intentar	I-policy
+presentar	I-policy
+demandas	I-policy
+frívolas	I-policy
+.	I-policy
+

@@ -1,0 +1,21 @@
+Acepto	B-policy
+que	I-policy
+ambas	I-policy
+partes	I-policy
+deben	I-policy
+saber	I-policy
+si	I-policy
+se	I-policy
+está	I-policy
+realizando	I-policy
+alguna	I-policy
+grabación	I-policy
+.	I-policy
+
+Es	B-value-reasons--1
+justo	I-value-reasons--1
+para	I-value-reasons--1
+ambos	I-value-reasons--1
+lados	I-value-reasons--1
+.	O
+

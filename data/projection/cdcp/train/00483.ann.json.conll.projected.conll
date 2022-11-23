@@ -1,0 +1,46 @@
+Verifique	B-policy
+la	I-policy
+ley	I-policy
+de	I-policy
+su	I-policy
+estado	I-policy
+,	I-policy
+por	B-fact
+ejemplo	I-fact
+,	I-fact
+Illinois	I-fact
+tiene	I-fact
+su	I-fact
+propia	I-fact
+Ley	I-fact
+de	I-fact
+agencias	I-fact
+de	I-fact
+cobro	I-fact
+.	I-fact
+
+Es	B-fact
+una	I-fact
+profesión	I-fact
+con	I-fact
+licencia	I-fact
+y	I-fact
+el	I-fact
+fiscal	I-fact
+general	I-fact
+del	I-fact
+estado	I-fact
+sería	I-fact
+el	I-fact
+comienzo	I-fact
+de	I-fact
+una	I-fact
+queja	I-fact
+.	I-fact
+
+_	B-reference-evidences--2
+_	I-reference-evidences--2
+URL	I-reference-evidences--2
+_	I-reference-evidences--2
+_	I-reference-evidences--2
+

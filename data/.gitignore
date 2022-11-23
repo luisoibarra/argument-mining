@@ -4,13 +4,14 @@
 
 !/corpus/
 /corpus/*
+
+!/corpus/testing/
+
 !/corpus/persuasive_essays_paragraph/
 /corpus/persuasive_essays_paragraph/*
 !/corpus/persuasive_essays_paragraph/dev/
 !/corpus/persuasive_essays_paragraph/test/
 !/corpus/persuasive_essays_paragraph/train/
-
-!/corpus/testing/
 
 !/corpus/persuasive_essays_paragraph_all_linked/
 /corpus/persuasive_essays_paragraph_all_linked/*
@@ -44,7 +45,32 @@
 
 !/projection/
 /projection/*
+
 !/projection/testing/
+
+!/projection/persuasive_essays_paragraph/
+/projection/persuasive_essays_paragraph/*
+!/projection/persuasive_essays_paragraph/dev/
+!/projection/persuasive_essays_paragraph/test/
+!/projection/persuasive_essays_paragraph/train/
+
+!/projection/persuasive_essays_paragraph_all_linked/
+/projection/persuasive_essays_paragraph_all_linked/*
+!/projection/persuasive_essays_paragraph_all_linked/dev/
+!/projection/persuasive_essays_paragraph_all_linked/test/
+!/projection/persuasive_essays_paragraph_all_linked/train/
+
+!/projection/abstrct/
+/projection/abstrct/*
+!/projection/abstrct/dev/
+!/projection/abstrct/test/
+!/projection/abstrct/train/
+
+!/projection/cdcp/
+/projection/cdcp/*
+!/projection/cdcp/dev/
+!/projection/cdcp/test/
+!/projection/cdcp/train/
 
 !/segmenter_processed/
 /segmenter_processed/*
