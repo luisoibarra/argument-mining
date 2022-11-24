@@ -1,0 +1,29 @@
+Crearán sitio web para dar  a conocer servicios
+
+
+
+En respuesta a la carta publicada el 20 de octubre del 2016, bajo el título,
+Una sugerencia que sería muy útil, formulada por Eliseo Re­yes le informamos
+que la Dirección General de Transporte Provincial de La Habana contrató los
+servicios de Transof, entidad diseñadora de sistemas, para la realización de
+un sitio web multiplataforma que se llamará Mi Ru­ta y tiene como principio
+fundamental detallar y especificar todos aquellos servicios de ómnibus que se
+brindan a la población, ya sea itinerario, régimen de paradas, así como las
+programaciones, que se irán implementando por etapas.
+
+Este servicio permitirá a la po­blación realizar sugerencias, las cuales serán
+atendidas por especialistas de la Dirección de Planeamiento, encontrándonos en
+la primera etapa de la in­troducción de la base de datos y prueba de
+funcionamiento que estará a disposición del público a principio del próximo
+año.
+
+Actualmente nuestra dirección está trabajando una aplicación para los móviles
+inteligentes (Smartphones) con sistema operativo Androide para que la
+población pueda acceder a la base de datos desde cualquier lu­gar que se
+encuentre.
+
+  
+José Conesa González  
+Director General,  
+DGT , La Habana.
+

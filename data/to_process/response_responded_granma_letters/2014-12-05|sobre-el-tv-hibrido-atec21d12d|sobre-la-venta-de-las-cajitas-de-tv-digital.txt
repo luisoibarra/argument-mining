@@ -1,0 +1,63 @@
+Sobre el TV híbrido ATEC?21D12D
+
+
+
+El TV híbrido ATEC 21D12D de tecnología de tubos de pantalla y de definición
+estándar fue diseñado de conjunto entre ingenieros cubanos y chinos y
+producido en Cuba, alcanzándose la cifra de 80 000 unidades del mismo.
+
+1\. Este equipo fue verificado por Lacetel bajo la resolución DNR-80 del
+Ministerio de Comunicaciones que establecía que en la recepción por el aire y
+en la reproducción de medios por el puerto USB, el sistema de audio del TV
+tenía que soportar varios formatos de audio entre los cuales estaba el sistema
+AC3. Lacetel detecta que este TV no cumplía con el requisito de la recepción
+por el aire de este tipo de audio aunque sí soportaba ese audio en la
+re­producción de medios. Lacetel correctamente señala en su página web que
+esto se puede corregir con una actualización de firmware.
+
+2\. Al estar el proceso de implementación de la TV Digital en Cuba en
+constante actualización, para lograr un mayor perfeccionamiento del mismo,
+posteriormente a esta revisión expresada en el punto 1, se adecuaron varios de
+los parámetros contenidos en la DNR-80 por parte de la Comisión de
+Implementación de la TV digital, que culminaron con la entrada en vigor de la
+resolución 430 del propio Ministerio de Co­mu­nicaciones que elimina este
+requisito para todos los receptores de definición estándar, dado el hecho de
+que en Cuba no sería transmitido este formato de audio y por tanto al TV que
+se distribuiría a la población no fue necesario realizarle ninguna
+actualización del firmware y no presenta ningún problema para su
+comercialización al ser esta la resolución vigente en la actualidad.
+
+3\. Respecto al planteamiento “los subtítulos que quedan fuera del área
+visible de la pantalla, si los mismos se encuentran ubicados muy abajo,
+pudieran no visualizarse”; esto se debe a que los TV de tubos de pantalla se
+ajustan ligeramente agrandados para evitar la aparición de barras negras en la
+parte superior o inferior de la imagen. Para corregir el problema señalado con
+los subtítulos, tal y como se expresa en el sitio web de Lacetel, se tomaron
+medidas más estrictas y se disminuyó la tolerancia permitida por parte del
+Control de Calidad de la línea de producción, para impedir que el TV saliera
+de nuestras instalaciones productivas con el mencionado defecto. Es preciso
+aclarar que en el caso de que existan televisores que presenten la situación
+mencionada, siempre se podrán visualizar los subtítulos mediante la función
+Zoom con la cual se puede disminuir o agrandar a voluntad la imagen y que es
+una de las bondades adicionales que presenta este TV.
+
+4\. En la propia página Web de Lacetel se puede observar que en la actualidad
+la industria nacional se encuentra en el proceso de evaluación de un moderno
+TV LCD con tecnología LED ahorrador de energía con vistas a su
+comercialización el próximo año.
+
+5\. Señalamos que es interés de la Empresa Industria Elec­trónica velar por la
+calidad de sus producciones y todo criterio que pueda contribuir a lograr ese
+objetivo será bienvenido. En ese sentido directivos de la Empresa Industria
+Elec­tró­nica se personaron en la vivienda del compañero Ransel González
+Gar­cía, en función de aclarar con el mismo las inquietudes plasmadas en su
+carta a Granma relacionadas con el TV híbrido producido por la Empresa
+Industria Electrónica, así como también ganar en criterios que puedan mejorar
+el producto. Se le explicó en detalle al compañero cada una de sus
+inquietudes, expresando su satisfacción al respecto y se le invitó a visitar
+las instalaciones de la Industria Electrónica para colaborar con la mejora de
+los productos que hoy se producen.
+
+Ingeniero Iván Barreras Fernández  
+Director General Empresa Industria Electrónica
+

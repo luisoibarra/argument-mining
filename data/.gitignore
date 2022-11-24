@@ -74,6 +74,7 @@
 
 !/segmenter_processed/
 /segmenter_processed/*
+
 !/segmenter_processed/testing/
 
 !/sentence_alignment/
@@ -83,3 +84,8 @@
 !/to_process/
 /to_process/*
 !/to_process/testing/
+!/to_process/granma_letters_json/
+!/to_process/granma_letters/
+!/to_process/response_responded_granma_letters/
+!/to_process/response_responded_granma_letters_json/
+!/to_process/selected_response_responded_granma_letters/

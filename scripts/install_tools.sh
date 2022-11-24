@@ -10,5 +10,11 @@ echo "Installing Fast Align"
 echo "Installing Spacy"
 ./install_spacy.sh
 
-echo "Installing Brat"
-./install_brat.sh
+
+if [[ $1 = nobrat ]] 
+then
+    echo "Not Installing Brat"
+else
+    echo "Installing Brat"
+    ./install_brat.sh
+fi

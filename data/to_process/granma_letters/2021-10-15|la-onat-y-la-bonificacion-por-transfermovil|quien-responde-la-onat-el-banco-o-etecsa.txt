@@ -1,0 +1,45 @@
+La ONAT y la bonificación por Transfermóvil
+
+
+
+Guillermo Chalita Pieras planteó su inconformidad al realizar el pago del
+Impuesto sobre el Transporte Terrestre por transfermóvil, y no recibir la
+bonificación por pronto pago del 20 % del importe. Ciertamente se ha
+potenciado el uso de los canales electrónicos de pago, como medida de
+protección ante la COVID-19 y en consonancia con la informatización de la
+sociedad.
+
+La ONAT entrega, en formato digital o impreso, el vector fiscal con las
+obligaciones de pagos de cada contribuyente, y también, periódicamente, a
+Redsa, la base de datos de la cual se nutre Transfermóvil, con las
+obligaciones de los contribuyentes que aparecen en ese vector fiscal, con los
+importes, beneficios y códigos. Transfermóvil tiene el servicio de pago de
+tributos mediante dos opciones: Pago por vector fiscal y Pago por carné de
+identidad.
+
+La primera es para el pago de las obligaciones periódicas, y se hace por el
+vector fiscal que contiene los códigos y la aplicación lo verifica contra la
+base de datos. Por la segunda se realizan los pagos eventuales de personas
+naturales, como son la compraventa de autos o de viviendas, entre otros, y en
+esta opción la aplicación no comprueba con la base de datos, porque los
+importes y párrafos no son periódicos.
+
+Ante la situación, la base de datos actualizada, con todas las obligaciones,
+fue entregada a Redsa el 14 de enero de 2021. A partir del 15 de enero
+estarían las posibilidades de pagar por los canales electrónicos, recibiendo
+el beneficio del 3 %, así como el pago por el vector fiscal con el descuento
+del 20 %. El pago se realizó, según la información recibida desde el Banco, el
+18 de enero de 2021, y el contribuyente pagó por la opción carné de identidad,
+que no consulta la base de datos, por lo que el importe con el beneficio debió
+plasmarlo cuando la aplicación le solicitó importe a pagar.
+
+Es decir, Transfermóvil funcionó correctamente, descontando solo el 3 % por el
+uso del canal electrónico de pago, y en el pago no se descuenta el 20 % de la
+bonificación, pues se realizó por la opción carné de identidad. El
+contribuyente debe solicitar la devolución de lo pagado en exceso en la
+oficina de la ONAT.
+
+Arelys Pérez García,
+
+directora de Atención al Contribuyente.
+

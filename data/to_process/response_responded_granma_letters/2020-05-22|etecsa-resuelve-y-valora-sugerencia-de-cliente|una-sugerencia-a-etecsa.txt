@@ -1,0 +1,42 @@
+Etecsa resuelve y valora sugerencia de cliente
+
+
+
+Bajo el título Una sugerencia para Etecsa se publicó la inconformidad de
+Ricardo Miranda Acosta, de Diez de Octubre, en La Habana. Refiere que para la
+reparación de un terminal móvil, en el taller de reparaciones de 25 y 32 le
+fue informado un valor estimado del costo de la reparación, y que al momento
+de la recogida del equipo reparado, el precio fue de un 50 % por encima del
+estimado. Sugiere entonces que en el comprobante del servicio se haga constar
+el precio y se le pida al cliente un contacto, pues al realizar el defectado
+real por el técnico pudiera aparecer otra rotura adicional que incremente el
+precio, y el cliente debería estar informado para saber si acepta o no el
+nuevo monto, antes de acometer la nueva acción.
+
+Para la investigación de este reclamo se creó una comisión y se pudo comprobar
+que, en el momento de la recepción, se le indicó al cliente el precio
+establecido por el módulo táctil display, de su lg k4 Novo, más el costo de la
+reparación, y se le explicó que este valor se podría incrementar, luego de la
+revisión del técnico. El terminal del usuario solamente tenía averiada la
+pantalla táctil, coincidiendo con la defectación inicial del ejecutivo, por lo
+cual no procedía contactar al cliente. Se corroboró que el total del pago
+efectuado por el cliente por los servicios prestados, fue contabilizado e
+ingresado al cierre del día, como corresponde, y que el software que gestiona
+el servicio tuvo una acción fallida, que provocó la modificación del ticket de
+la reparación, lo cual fue ratificado por el desarrollador,  
+corregido y certificado nuevamente todo el proceso.
+
+Se visitó al cliente en dos ocasiones, inicialmente para ponerlo al tanto de
+la situación, y en una segunda visita le fue reintegrada la diferencia
+correspondiente por el importe pagado. Se le ofreció disculpas por las
+molestias ocasionadas. A la par, fueron redirigidas, al área a cargo del
+servicio, sus sugerencias sobre la posibilidad de incorporar en el comprobante
+el precio de la reparación y el número de contacto, para futuras
+actualizaciones. Miranda Acosta quedó satisfecho por la atención brindada.
+
+Aymé González Hernández,
+
+Directora de Protección al Consumidor,
+
+Etecsa.
+

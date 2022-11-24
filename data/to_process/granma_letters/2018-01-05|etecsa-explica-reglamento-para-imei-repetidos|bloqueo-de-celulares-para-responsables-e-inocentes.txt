@@ -1,0 +1,70 @@
+Etecsa explica reglamento para IMEI repetidos
+
+
+
+Bajo el título «Bloqueo de celulares para responsables e inocentes», se
+publicó en esa sección el 18 de agosto, la carta del lector Lázaro Alain Sosa
+Bolaños, residente en Palmira, Cienfuegos, inconforme con el proceder que
+deben realizar los usuarios para el desbloqueo del servicio móvil.
+
+Un teléfono móvil es bloqueado automáticamente por la red cuando es
+identificado en un registro conocido como Lista Negra. Este registro concentra
+aquellos teléfonos reportados por los clientes como extraviados o robados. Los
+clientes que son bloqueados deben acercarse en un término de cinco días
+hábiles a la oficina comercial para esclarecer las causas, de lo contrario se
+procede a la baja del servicio.
+
+Sin embargo, el servicio de Lázaro Alain fue bloqueado indebidamente porque en
+su caso lo que detectó la red fue que su teléfono tiene un imei duplicado.
+Para casos como este se le informa al cliente sobre la situación de su equipo,
+explicándole que en el 2018 deberá sustituirlo, según la Resolución 12 del
+2016 del Ministerio de Comunicaciones.
+
+Dicha resolución ministerial, Reglamento sobre el registro, control y
+utilización de equipos terminales que funcionan en el servicio celular de
+telecomunicaciones móviles terrestres, publicada en la Gaceta Oficial,
+establece que todos los equipos que tengan imei no válidos en sus teléfonos
+móviles deberán ser remplazados antes de la fecha fijada del 2018.
+
+Una vez esclarecida la situación de Lázaro se procedió a desbloquear su
+servicio, detectándose que en el proceso se incumplieron procederes de
+actuación por parte del personal que le atendió. El primer error fue
+bloquearlo por tener un imei repetido, en lugar de contactarle y advertirle
+sobre su situación, y el segundo error fue no haberle atendido en cualquiera
+de los lugares donde se presentó, redirigiéndolo a otra dependencia. Esta
+situación fue analizada por las dos Direcciones Territoriales involucradas en
+el caso, Sancti Spíritus y Cienfuegos, dando como resultado la adopción de
+diversas medidas.
+
+En la entrevista Lázaro insistió en que hay que aumentar la divulgación a los
+usuarios sobre este tema, por lo que teniendo en cuenta esta demanda
+aprovechamos el espacio para explicarlo a los usuarios:
+
+Cada terminal telefónico móvil posee un código que le identifica de manera
+específica a nivel mundial.
+
+Este código llamado «Código de Identificación Internacional de Equipo Móvil»,
+conocido por sus siglas en inglés como imei, es único para cada teléfono, y es
+el que distingue a un equipo auténtico.
+
+El número de imei podrá encontrarse de diferentes maneras y en todas deben
+coincidir. Por ejemplo, podrá buscarse en el envase del teléfono bajo la
+batería, generalmente puede consultarse en el Menú Ajustes del teléfono y
+también podrá visualizarse en la pantalla marcando *#06#.
+
+El imei será legítimo si no está repetido y deberá estar formado por 15
+dígitos numéricos, sin letras, y no puede comenzar por 00. Para validarlo los
+usuarios deberán acceder al portal www.etecsa.cu, y en la parte inferior de la
+página llegar a la opción Compruebe código imei. El proceso de consulta debe
+hacerse sistemáticamente, pues un equipo con igual imei pudiera aparecer en el
+transcurso del tiempo.
+
+Todo usuario que compruebe que el imei de su equipo telefónico no es válido,
+deberá prepararse para su reposición antes del 18 de mayo del 2018, fecha
+indicada en la resolución mencionada, pues después de este plazo no
+funcionarán en la red.
+
+Lic. Tania Velázquez Rodríguez  
+Directora Comercial y Mercadotecnia  
+Etecsa
+
