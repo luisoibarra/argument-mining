@@ -1,0 +1,10 @@
+B-Claim
+B-MajorClaim
+B-Premise
+E-Claim
+E-MajorClaim
+E-Premise
+I-Claim
+I-MajorClaim
+I-Premise
+O

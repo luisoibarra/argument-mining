@@ -43,6 +43,21 @@
 /parsed_to_conll/*
 !/parsed_to_conll/testing/
 
+!/segmenter_corpus/
+/segmenter_corpus/*
+
+!/segmenter_corpus/persuasive_essays_paragraph_all_linked/
+/segmenter_corpus/persuasive_essays_paragraph_all_linked/*
+!/segmenter_corpus/persuasive_essays_paragraph_all_linked/*.txt
+
+!/segmenter_corpus/cdcp/
+/segmenter_corpus/cdcp/*
+!/segmenter_corpus/cdcp/*.txt
+
+!/segmenter_corpus/abstrct/
+/segmenter_corpus/abstrct/*
+!/segmenter_corpus/abstrct/*.txt
+
 !/projection/
 /projection/*
 
