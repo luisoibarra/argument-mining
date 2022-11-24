@@ -10,6 +10,8 @@
 - Visualize and modify the classified arguments and relations
   - Brat annotation tool is used to view and correct annotations
 
+Go [here](https://github.com/luisoibarra/thesis) for more information about the models.
+
 ## Setup
 
 Some tools are missing from the release and need to be installed. Go to `scripts/` and run `./install_tools.sh`. This will download and install the tools and embeddings. This step is required for both setup preocesses. After the script has finished follow the steps in the selected setup process below.
