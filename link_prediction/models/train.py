@@ -42,7 +42,7 @@ optional_args = [
         help=f"Default: {value}",
         type=type(value),
         default=value
-    ) for key, value in link_prediction_model.params.items()
+    ) for key, value in link_prediction_model.params.items() if "path" not in key
 ]
 
 def handle_from_args(args: argparse.Namespace):
