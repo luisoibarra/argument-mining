@@ -14,6 +14,12 @@
 
 Some tools are missing from the release and need to be installed. Go to `scripts/` and run `./install_tools.sh`. This will download and install the tools and embeddings. This step is required for both setup preocesses. After the script has finished follow the steps in the selected setup process below.
 
+### Colab
+
+A working example in [Colab](https://colab.research.google.com/drive/1iCVAoVXXtsgnHddjoVyXUPrLcNgYok1Z?usp=sharing).
+
+Or open **ArgumentMiningColab.ipynb** with Colab.
+
 ### Local
 
 Run the script `./install.sh`
