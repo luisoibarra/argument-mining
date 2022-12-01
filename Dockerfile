@@ -1,1 +1,1 @@
-FROM tensorflow-addons-nltk-pandas-sklearn-awesome-align-corpus-spacy:2.9.1-jupyter
+FROM argument-mining-final-tensorflow:2.9.1-jupyter

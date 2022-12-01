@@ -47,13 +47,40 @@ optional_args = [
 
 def handle_from_args(args: argparse.Namespace):
     arg_dict = vars(args)
+    train(**arg_dict)
+    # export_notebook_as_module(NOTEBOOK_PATH, 
+    #     new_params={
+    #         arg.name: (f'"{arg_dict[arg.name]}"' if isinstance(arg_dict[arg.name], str) else arg_dict[arg.name]) for arg in optional_args
+    #     },
+    #     new_cap_variables={
+    #         "INFO_TAG": f'"{args.corpus_tag}"',
+    #         "LANGUAGE": f'"{args.language}"'
+    #     })
+    # import importlib
+    # importlib.reload(link_prediction_model)
+    # link_prediction_model.train_pipeline(link_prediction_model.params)
+
+
+def train(**kwargs):    
+    """
+    required tags.
+
+    corpus_tag: Tag that identifies the corpus
+    language: Language of the corpus
+
+    optional tags.
+    Many tags more. See optional_args
+    """
+
+    corpus_tag = kwargs['corpus_tag']
+    language = kwargs['language']
     export_notebook_as_module(NOTEBOOK_PATH, 
         new_params={
-            arg.name: (f'"{arg_dict[arg.name]}"' if isinstance(arg_dict[arg.name], str) else arg_dict[arg.name]) for arg in optional_args
+            arg.name: (f'"{kwargs[arg.name]}"' if isinstance(kwargs[arg.name], str) else kwargs[arg.name]) for arg in optional_args
         },
         new_cap_variables={
-            "INFO_TAG": f'"{args.corpus_tag}"',
-            "LANGUAGE": f'"{args.language}"'
+            "INFO_TAG": f'"{corpus_tag}"',
+            "LANGUAGE": f'"{language}"'
         })
     import importlib
     importlib.reload(link_prediction_model)

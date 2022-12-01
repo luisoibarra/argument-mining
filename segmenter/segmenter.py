@@ -88,14 +88,25 @@ class RandomArgumentSegmenter(ArgumentSegmenter):
             if inside:
                 tag = meta_tag
             else:
-                tag = None
+                tag = "O"
 
-            generated_tags.append(tag)
-            current_arg = ""
+            start = True
             while current < final_current:
-                current_arg += text[current] + " "
+                if not inside:
+                    final_tag = tag
+                elif length == 1:
+                    final_tag = f"S-{meta_tag}"
+                elif start:
+                    final_tag = f"B-{meta_tag}"
+                elif current == final_current - 1:
+                    final_tag = f"E-{meta_tag}"
+                else:
+                    final_tag = f"I-{meta_tag}"
+
+                arg_units.append(text[current])
+                generated_tags.append(final_tag)
                 current += 1
-            arg_units.append(current_arg)
+                start = False
 
         return [x for x in zip(arg_units, generated_tags)]
 

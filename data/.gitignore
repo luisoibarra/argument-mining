@@ -31,6 +31,13 @@
 !/corpus/cdcp/test/
 !/corpus/cdcp/train/
 
+!/corpus/corpus_test/
+/corpus/corpus_test/*
+!/corpus/corpus_test/dev/
+!/corpus/corpus_test/test/
+!/corpus/corpus_test/train/
+
+
 !/bidirectional_alignment/
 /bidirectional_alignment/*
 !/bidirectional_alignment/testing/

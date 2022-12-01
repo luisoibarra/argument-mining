@@ -4,5 +4,8 @@
     "dockerFile": "../Dockerfile",
     "extensions": [
         "ms-python.python"
+    ],
+    "forwardPorts": [
+        8501
     ]
 }

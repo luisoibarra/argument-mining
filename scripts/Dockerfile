@@ -10,6 +10,7 @@ RUN pip install tensorflow-addons \
  && pip install pandas \
  && pip install scikit-learn \
  && pip install deep-translator \
+ && pip install streamlit \
  && ./install_awesome_align_docker.sh \
  && ./install_spacy.sh \
  && rm essay001.ann.conll.align install_awesome_align_docker.sh install_spacy.sh install_nltk_resources.sh

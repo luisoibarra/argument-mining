@@ -50,13 +50,13 @@ def make_alignemnts_pipeline(
     projector: Projector used to make the projections
     """
     
-    log.info("Creating sentence alignment {0}", standard_corpus_dir)
+    log.info(f"Creating sentence alignment {str(standard_corpus_dir)}")
     sentence_aligner.sentence_alignment_dir(standard_corpus_dir, sentence_alignment_dest_dir, **kwargs)
     
-    log.info("Creating bidirectional alignment {0}", sentence_alignment_dest_dir)
+    log.info(f"Creating bidirectional alignment {str(sentence_alignment_dest_dir)}")
     aligner.bidirectional_align_dir(sentence_alignment_dest_dir, bidirectional_alignment_dest_dir, **kwargs)
 
-    log.info("Creating projection {0}", projection_dest_dir)
+    log.info(f"Creating projection {str(projection_dest_dir)}")
     projector.project_dir(standard_corpus_dir, sentence_alignment_dest_dir, 
                           bidirectional_alignment_dest_dir, projection_dest_dir, **kwargs)
 

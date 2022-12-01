@@ -1,0 +1,70 @@
+from pathlib import Path
+from segmenter.models.train import train as train_segmenter
+from link_prediction.models.train import train as train_link_predictor
+import streamlit as st
+
+st.title("Training")
+
+data_path = Path(__file__, "../../../data").resolve()
+
+# Select corpus
+corpus_dir = data_path / "projection"
+options = [path.name for path in corpus_dir.iterdir() if path.is_dir() and path.name[0] != "_"]
+corpus_name = st.selectbox("Corpus selection:", options, help="Select the corpus to train with. The folder should be at data/projection and contain dev, test and train folders")
+
+options = ["spanish", "english"]
+corpus_language = st.selectbox("Corpus language:", options)
+
+st.header("Segmenter:")
+
+epochs = st.slider("Epochs segmenter", 1, 120, 100, step=1)
+use_pos = st.checkbox("Use POS features", True)
+use_char_cnn = st.checkbox("Use Char CNN features", True)
+use_char_lstm = st.checkbox("Use Char LSTM features", True)
+use_res = st.checkbox("Use residual connections", True)
+use_norm = st.checkbox("Use normalization", True)
+use_dense = st.checkbox("Use final dense layer", True)
+
+if st.button("Train segmenter"):
+    with st.spinner("Training segmenter ..."):
+        train_segmenter(
+            corpus_tag=corpus_name, 
+            language=corpus_language,
+            epochs=int(epochs),
+            with_pos=use_pos,
+            with_resnet=use_res,
+            with_layer_normalization=use_norm,
+            with_cnn=use_char_cnn,
+            with_lstm=use_char_lstm,
+            with_dn=use_dense
+            )
+        st.info("Segmenter trained")
+
+
+st.header("Link predictor:")
+
+epochs = st.slider("Epochs link predictor", 1, 120, 70, step=1)
+multi_head_att = st.checkbox("Use multi-head attention", False)
+att = st.checkbox("Use attention", False)
+pooling = st.slider("Pooling", 1, 15, 10, step=1)
+dropout = st.slider("Dropout", 0.0, 1.0, 0.1)
+learning_rate = st.slider("Learning rate", 0.001, 0.006, 0.003, step=0.001, format="%.3f")
+patience = st.slider("Patience", 0, 20, 5, step=1)
+return_best = st.checkbox("Return best", False)
+
+if st.button("Train link predictor"):
+    with st.spinner("Training link predictor ..."):
+        train_link_predictor(
+            corpus_tag=corpus_name, 
+            language=corpus_language,
+            epochs=int(epochs),
+            dropout=dropout,
+            encoder_pool_size=int(pooling),
+            with_attention=att,
+            with_multi_head_attention=multi_head_att,
+            lr_alpha=learning_rate,
+            patience=int(patience),
+            return_best=return_best,
+        )
+        st.info("Link predictor trained")
+

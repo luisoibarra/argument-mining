@@ -86,34 +86,39 @@ def corpus_processing_example():
 def link_processing_example():
     
     base_path = Path("data")
-    # dataset_name = "testing"
-    dataset_name = "persuasive_essays_paragraph_all_linked"
+    base_path = Path("streamlit_app", "data")
+    dataset_name = "cdcp"
+    # dataset_name = "persuasive_essays_paragraph_all_linked"
     # dataset_name = "testing_sentence"
     # dataset_name = "testing"
     language = "spanish"
 
-    segmenter_dir = Path(base_path, "to_process", dataset_name)
+    # segmenter_dir = Path(base_path, "to_process", dataset_name)
+    segmenter_dir = Path(base_path, dataset_name, "texts")
 
-    exported_segmenter_dir = Path(base_path, "segmenter", dataset_name)
+    # exported_segmenter_dir = Path(base_path, "segmenter", dataset_name)
+    exported_segmenter_dir = Path(base_path, dataset_name, "segmenter")
     
-    link_prediction_dir = Path(base_path, "link_prediction_processed", dataset_name)
+    # link_prediction_dir = Path(base_path, "link_prediction_processed", dataset_name)
+    link_prediction_dir = Path(base_path, dataset_name, "result")
     
     
     arg_tags = ["Claim", "MajorClaim", "Premise"]
-    # segmenter = RandomArgumentSegmenter(arg_tags)
-    segmenter = TensorflowArgumentSegmenter(dataset_name, language)
-    ex = segmenter.extract_arguments_from_file(Path("data/to_process/granma_letters/2017-03-10|contesta-vivienda-de-guanabacoa|indolencia-e-ineficiencia-en-la-direccion-municipal-de-vivienda-de-guanabacoa.txt"), Path("."))
+    segmenter = RandomArgumentSegmenter(arg_tags)
+    # segmenter = TensorflowArgumentSegmenter(dataset_name, language)
+    # ex = segmenter.extract_arguments_from_file(Path("data/to_process/granma_letters/2017-03-10|contesta-vivienda-de-guanabacoa|indolencia-e-ineficiencia-en-la-direccion-municipal-de-vivienda-de-guanabacoa.txt"), Path("."))
     
     link_predictor = RandomLinkPredictor(
         arg_tags,
         ["", "support", "attack", "support_Inverse", "attack_Inverse"])
     
-    # perform_full_inference_pipeline(
-    #     segmenter,
-    #     link_predictor,
-    #     segmenter_dir,
-    #     exported_segmenter_dir,
-    #     link_prediction_dir)
+    perform_full_inference_pipeline(
+        segmenter,
+        link_predictor,
+        segmenter_dir,
+        exported_segmenter_dir,
+        link_prediction_dir,
+        source_language=language)
 
 def export_brat_example():
     
@@ -136,8 +141,8 @@ def export_brat_example():
 
 if __name__ == "__main__":
     # corpus_processing_example()
-    # link_processing_example()
-    export_brat_example()
+    link_processing_example()
+    # export_brat_example()
     
     # parse_corpus_pipeline(Path("code", "data", "corpus", "ArgumentAnnotatedEssays-2.0", "train-test-split", "dev"),
     #                       Path("code", "data", "parsed_to_conll", "ArgumentAnnotatedEssays-2.0", "dev"),
