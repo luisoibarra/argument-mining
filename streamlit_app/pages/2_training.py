@@ -1,4 +1,5 @@
 from pathlib import Path
+from utils.console_utils import make_command, run_bash_command
 from segmenter.models.train import train as train_segmenter
 from link_prediction.models.train import train as train_link_predictor
 import streamlit as st
@@ -6,6 +7,7 @@ import streamlit as st
 st.title("Training")
 
 data_path = Path(__file__, "../../../data").resolve()
+scripts_path = str((data_path / ".." / "scripts").resolve())
 
 # Select corpus
 corpus_dir = data_path / "projection"
@@ -27,17 +29,47 @@ use_dense = st.checkbox("Use final dense layer", True)
 
 if st.button("Train segmenter"):
     with st.spinner("Training segmenter ..."):
-        train_segmenter(
-            corpus_tag=corpus_name, 
-            language=corpus_language,
-            epochs=int(epochs),
-            with_pos=use_pos,
-            with_resnet=use_res,
-            with_layer_normalization=use_norm,
-            with_cnn=use_char_cnn,
-            with_lstm=use_char_lstm,
-            with_dn=use_dense
+        
+        use_script = True # If not then memory leak with the models
+        if use_script:
+            # Calling script
+            command = make_command(*[
+                "cd",
+                scripts_path,
+                "&&",
+                "./train_segmenter.sh",
+                corpus_name,
+                corpus_language,
+                "--epochs",
+                str(epochs),
+                "--with_pos",
+                str(use_pos),
+                "--with_resnet",
+                str(use_res),
+                "--with_layer_normalization",
+                str(use_norm),
+                "--with_cnn",
+                str(use_char_cnn),
+                "--with_lstm",
+                str(use_char_lstm),
+                "--with_dn",
+                str(use_dense),
+            ])
+            run_bash_command(command)
+        else:
+            # Calling method
+            train_segmenter(
+                corpus_tag=corpus_name, 
+                language=corpus_language,
+                epochs=int(epochs),
+                with_pos=use_pos,
+                with_resnet=use_res,
+                with_layer_normalization=use_norm,
+                with_cnn=use_char_cnn,
+                with_lstm=use_char_lstm,
+                with_dn=use_dense
             )
+        
         st.info("Segmenter trained")
 
 
@@ -54,17 +86,48 @@ return_best = st.checkbox("Return best", False)
 
 if st.button("Train link predictor"):
     with st.spinner("Training link predictor ..."):
-        train_link_predictor(
-            corpus_tag=corpus_name, 
-            language=corpus_language,
-            epochs=int(epochs),
-            dropout=dropout,
-            encoder_pool_size=int(pooling),
-            with_attention=att,
-            with_multi_head_attention=multi_head_att,
-            lr_alpha=learning_rate,
-            patience=int(patience),
-            return_best=return_best,
-        )
+        
+        use_script = True # If not then memory leak with the models
+        if use_script:
+            # Calling script
+            command = make_command(*[
+                "cd",
+                scripts_path,
+                "&&",
+                "./train_link_predictor.sh",
+                corpus_name,
+                corpus_language,
+                "--epochs",
+                str(epochs),
+                "--dropout",
+                str(dropout),
+                "--encoder_pool_size",
+                str(pooling),
+                "--with_attention",
+                str(att),
+                "--with_multi_head_attention",
+                str(multi_head_att),
+                "--lr_alpha",
+                str(learning_rate),
+                "--patience",
+                str(patience),
+                "--return_best",
+                str(return_best),
+            ])
+            run_bash_command(command)
+        else:
+            # Calling method
+            train_link_predictor(
+                corpus_tag=corpus_name, 
+                language=corpus_language,
+                epochs=int(epochs),
+                dropout=dropout,
+                encoder_pool_size=int(pooling),
+                with_attention=att,
+                with_multi_head_attention=multi_head_att,
+                lr_alpha=learning_rate,
+                patience=int(patience),
+                return_best=return_best,
+            )
         st.info("Link predictor trained")
 

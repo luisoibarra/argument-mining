@@ -4,14 +4,17 @@ if __name__ == "__main__":
     path = str(Path(__file__, "..", "..", "..").resolve())
     if path not in sys.path:
         sys.path.insert(0, path)
-    NOTEBOOK_PATH = Path(__file__, "..", "segmenter.ipynb").resolve()
-    from utils.notebook_utils import export_notebook_as_module
-    export_notebook_as_module(NOTEBOOK_PATH)
 
+from pathlib import Path
+from utils.notebook_utils import export_notebook_as_module
+NOTEBOOK_PATH = Path(__file__, "..", "segmenter.ipynb").resolve()
+try:
+    import segmenter.models.segmenter as segmenter_model
+except ImportError:
+    export_notebook_as_module(NOTEBOOK_PATH)
+    import segmenter.models.segmenter as segmenter_model
 
 import argparse
-from pathlib import Path
-import segmenter.models.segmenter as segmenter_model
 from utils.argparser_utils import ChoiceArg, OptionalArg, PositionalArg, update_parser
 
 positional_args = [
@@ -46,7 +49,7 @@ optional_args = [
     OptionalArg(
         name=key,
         help=f"Default: {value}",
-        type=type(value),
+        type=type(value) if type(value) != bool else lambda x: True if x.lower() == "true" else False,
         default=value
     ) for key, value in segmenter_model.params.items() if "path" not in key
 ]
@@ -54,18 +57,6 @@ optional_args = [
 def handle_from_args(args: argparse.Namespace):
     arg_dict = vars(args)
     train(**arg_dict)
-    # export_notebook_as_module(NOTEBOOK_PATH, 
-    #     new_params={
-    #         arg.name: (f'"{arg_dict[arg.name]}"' if isinstance(arg_dict[arg.name], str) else arg_dict[arg.name]) for arg in optional_args
-    #     },
-    #     new_cap_variables={
-    #         "INFO_TAG": f'"{args.corpus_tag}"',
-    #         "LANGUAGE": f'"{args.language}"'
-    #     })
-    # import importlib
-    # importlib.reload(segmenter_model)
-    # create_corpus = arg_dict['create_corpus'] == "yes"
-    # segmenter_model.train_pipeline(segmenter_model.params, create_corpus)
 
 def train(**kwargs):
     """
@@ -81,7 +72,7 @@ def train(**kwargs):
     language = kwargs['language']
     export_notebook_as_module(NOTEBOOK_PATH, 
         new_params={
-            arg.name: (f'"{kwargs[arg.name]}"' if isinstance(kwargs[arg.name], str) else kwargs[arg.name]) for arg in optional_args
+            arg.name: (f'"{kwargs[arg.name]}"' if isinstance(kwargs[arg.name], str) else kwargs[arg.name]) for arg in optional_args if arg.name in kwargs
         },
         new_cap_variables={
             "INFO_TAG": f'"{corpus_tag}"',
@@ -89,9 +80,9 @@ def train(**kwargs):
         })
     import importlib
     importlib.reload(segmenter_model)
-    create_corpus = kwargs['create_corpus'] == "yes"
+    create_corpus = kwargs['create_corpus'] == "yes" if "create_corpus" in kwargs else False
     segmenter_model.train_pipeline(segmenter_model.params, create_corpus)
-
+    segmenter_model.params.clear()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

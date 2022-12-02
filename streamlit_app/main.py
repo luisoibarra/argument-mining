@@ -45,12 +45,12 @@ if st.button("Load segmenter"):
             st.session_state.pop(st.session_state["segmenter_key"])
             st.session_state.pop("segmenter_key")
         if "segmenter_key" not in st.session_state:
-            # from segmenter.tf_segmenter import TensorflowArgumentSegmenter
-            from segmenter.segmenter import RandomArgumentSegmenter
+            from segmenter.tf_segmenter import TensorflowArgumentSegmenter
+            # from segmenter.segmenter import RandomArgumentSegmenter
 
             st.session_state['segmenter_key'] = new_segmenter_key
-            # segmenter = TensorflowArgumentSegmenter(segmenter_name, language)
-            segmenter = RandomArgumentSegmenter(["MajorClaim", "Claim", "Premise"])
+            segmenter = TensorflowArgumentSegmenter(segmenter_name, language)
+            # segmenter = RandomArgumentSegmenter(["MajorClaim", "Claim", "Premise"])
             st.session_state[new_segmenter_key] = segmenter
         if "segmenter_key" in st.session_state:
             st.info(f"Segmenter {st.session_state['segmenter_key']} Loaded")
@@ -67,12 +67,12 @@ if st.button("Load link predictor"):
             st.session_state.pop(st.session_state["link_predictor_key"])
             st.session_state.pop("link_predictor_key")
         if "link_predictor_key" not in st.session_state:
-            # from link_prediction.tf_link_predictor import TensorflowLinkPredictor
-            from link_prediction.link_predictor import RandomLinkPredictor
+            from link_prediction.tf_link_predictor import TensorflowLinkPredictor
+            # from link_prediction.link_predictor import RandomLinkPredictor
 
             st.session_state['link_predictor_key'] = new_link_predictor_key
-            # link_predictor = TensorflowLinkPredictor(link_predictor_name, language)
-            link_predictor = RandomLinkPredictor(["MajorClaim", "Claim", "Premise"], ["attacks", "supports"])
+            link_predictor = TensorflowLinkPredictor(link_predictor_name, language)
+            # link_predictor = RandomLinkPredictor(["MajorClaim", "Claim", "Premise"], ["attacks", "supports"])
             st.session_state[new_link_predictor_key] = link_predictor
         if "link_predictor_key" in st.session_state:
             st.info(f"Link Predictor {st.session_state['link_predictor_key']} Loaded")

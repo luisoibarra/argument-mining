@@ -4,14 +4,17 @@ if __name__ == "__main__":
     path = str(Path(__file__, "..", "..", "..").resolve())
     if path not in sys.path:
         sys.path.insert(0, path)
-    NOTEBOOK_PATH = Path(__file__, "..", "link_prediction.ipynb").resolve()
-    from utils.notebook_utils import export_notebook_as_module
-    export_notebook_as_module(NOTEBOOK_PATH)
 
+from pathlib import Path
+from utils.notebook_utils import export_notebook_as_module
+NOTEBOOK_PATH = Path(__file__, "..", "link_prediction.ipynb").resolve()
+try:
+    import link_prediction.models.link_prediction as link_prediction_model
+except ImportError:
+    export_notebook_as_module(NOTEBOOK_PATH)
+    import link_prediction.models.link_prediction as link_prediction_model
 
 import argparse
-from pathlib import Path
-import link_prediction.models.link_prediction as link_prediction_model
 from utils.argparser_utils import ChoiceArg, OptionalArg, PositionalArg, update_parser
 
 positional_args = [
@@ -40,7 +43,7 @@ optional_args = [
     OptionalArg(
         name=key,
         help=f"Default: {value}",
-        type=type(value),
+        type=type(value) if type(value) != bool else lambda x: True if x.lower() == "true" else False,
         default=value
     ) for key, value in link_prediction_model.params.items() if "path" not in key
 ]
@@ -48,18 +51,6 @@ optional_args = [
 def handle_from_args(args: argparse.Namespace):
     arg_dict = vars(args)
     train(**arg_dict)
-    # export_notebook_as_module(NOTEBOOK_PATH, 
-    #     new_params={
-    #         arg.name: (f'"{arg_dict[arg.name]}"' if isinstance(arg_dict[arg.name], str) else arg_dict[arg.name]) for arg in optional_args
-    #     },
-    #     new_cap_variables={
-    #         "INFO_TAG": f'"{args.corpus_tag}"',
-    #         "LANGUAGE": f'"{args.language}"'
-    #     })
-    # import importlib
-    # importlib.reload(link_prediction_model)
-    # link_prediction_model.train_pipeline(link_prediction_model.params)
-
 
 def train(**kwargs):    
     """
@@ -76,7 +67,7 @@ def train(**kwargs):
     language = kwargs['language']
     export_notebook_as_module(NOTEBOOK_PATH, 
         new_params={
-            arg.name: (f'"{kwargs[arg.name]}"' if isinstance(kwargs[arg.name], str) else kwargs[arg.name]) for arg in optional_args
+            arg.name: (f'"{kwargs[arg.name]}"' if isinstance(kwargs[arg.name], str) else kwargs[arg.name]) for arg in optional_args if arg.name in kwargs
         },
         new_cap_variables={
             "INFO_TAG": f'"{corpus_tag}"',
@@ -85,6 +76,7 @@ def train(**kwargs):
     import importlib
     importlib.reload(link_prediction_model)
     link_prediction_model.train_pipeline(link_prediction_model.params)
+    link_prediction_model.params.clear()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

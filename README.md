@@ -52,6 +52,11 @@ The repository supports the Development Container feature for Visual Studio Code
 2. Click on the link prompted
 3. Open the desired notebook
 
+**Run Streamlit app:**
+
+1. Go to `/scripts` folder and run `./run_docker_streamlit.sh`
+2. Click on the link prompted
+
 ## Basic Usage
 
 Some python modules are generated from jupyter notebooks. **Never** touch this modules, instead modify the notebook according your needs. For example, `link_prediction/models/link_prediction.ipynb` generates `link_prediction/models/link_prediction.py`, the modules are generated to avoid boilerplate code and be able to import the functions in the notebooks.
@@ -62,9 +67,12 @@ This package doesn't come with trained models. To train the models the repositor
 
 1. Go to `scripts/` and run `./process_paragraph_corpus.sh persuasive_essays_paragraph` to create the corpus projection.
 2. Train segmenter model:
+
   - Open `segmenter/models/segmenter.ipynb` and run the cells needed for training and saving the model. (Recomended)
   - Run `./train_segmenter.sh`.
+
 3. Train link predictor model:
+
   - Open `link_prediction/models/link_prediction.ipynb` and run the cells needed for training and saving the model. (Recomended)
   - Run `./train_link_predictor.sh`
 
@@ -123,6 +131,14 @@ This [package](utils/README.md) is in charge of storing utility functions.
 ### Data
 
 This [directory](data/README.md) contains all the outputs from the differents steps.
+
+### Pos tagger
+
+This [directory](pos_tagger/README.md) contains the algorithms to perform the POS tagging task.
+
+### Streamlit app
+
+This [directory](pos_tagger/README.md) contains the streamlit app implementation.
 
 ## Data Visualization
 
