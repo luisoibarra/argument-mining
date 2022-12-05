@@ -38,7 +38,7 @@ optional_args = [
         name="corpus_tag",
         help="Tag representing the corpus used for creating the model",
         type=str,
-        default="persuasive_essays_paragraph"
+        default="cdcp"
     ),
     OptionalArg(
         name="source_language",

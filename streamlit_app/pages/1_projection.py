@@ -1,3 +1,5 @@
+import shutil
+from zipfile import ZipFile
 from data_augmentation.translation_augmentation import TranslateDataAugmentator
 from projector.projector import CrossLingualAnnotationProjector
 from aligner.aligner import AwesomeAlignAligner, FastAlignAligner
@@ -15,6 +17,38 @@ st.title("Projection")
 
 data_path = Path(__file__, "../../../data").resolve()
 
+ex = st.expander("Upload corpus")
+to_projection = ex.checkbox("Is in target language.", help="If this box is checked then the submited corpus it is assumed to be in target language and will be direcly copied to the projection corpus folder else will be copied to the initial corpus folder.")
+file = ex.file_uploader("Upload corpus", "zip", help="Upload a zip file containing the corpus. The file must contain dev, test and train folders.")
+if file is not None:
+    must_have = ["dev", "train", "test"]
+    zip_file = ZipFile(file)
+    errors = False
+    for info in zip_file.infolist():
+        if info.is_dir():
+            name = Path(info.filename).name
+            if name in must_have:
+                must_have.remove(name)
+            else:
+                ex.error(f"The zip file must only directories with names dev, train or test. Invalid directory name {name} found.")
+                errors = True
+    for missing_dir in must_have:
+        ex.error(f"The zip file doesn't contain a folder called {missing_dir}.")
+        errors = True
+
+    if not errors and ex.button(f"Upload corpus"):
+        name = Path(zip_file.filename).stem
+        corpus_path = (data_path / "projection" / name) if to_projection else (data_path / "corpus" / name)
+        if corpus_path.exists():
+            shutil.rmtree(corpus_path)
+        corpus_path.mkdir(exist_ok=True, parents=True)
+        zip_file.extractall(corpus_path)
+        st.info("Corpus uploaded.")
+else:
+    ex.error(f"File not uploaded.")
+
+
+
 # Select corpus
 corpus_dir = data_path / "corpus"
 options = [path.name for path in corpus_dir.iterdir() if path.is_dir() and path.name[0] != "_"]
@@ -26,7 +60,7 @@ source_language = st.selectbox("Corpus language:", options)
 options = ["spanish"]
 target_language = st.selectbox("Target language:", options)
 
-options = [False, True]
+options = [True, False]
 use_spacy = st.selectbox("Use spacy:", options, help="If spacy is used to process the text. NLTK is used by default.")
 
 parser_selection = {
@@ -46,8 +80,8 @@ options = list(translator_selection.keys())
 translator_selected = st.selectbox("Select translator:", options)
 
 aligner_selection = {
-    "fast_align": lambda: FastAlignAligner(),
     "awesome_align": lambda: AwesomeAlignAligner(),
+    "fast_align": lambda: FastAlignAligner(),
 }
 options = list(aligner_selection.keys())
 aligner_selected = st.selectbox("Select aligner:", options, help="Fast align is fast but not accurate, AwesomeAlign is slow but more accurate.")
@@ -59,8 +93,8 @@ options = list(projector_selection.keys())
 projector_selected = st.selectbox("Select projector:", options)
 
 data_augmentator_selection = {
-    "None": lambda: None,
     "backtranslation": lambda: TranslateDataAugmentator(),
+    "None": lambda: None,
 }
 options = list(data_augmentator_selection.keys())
 data_augmentator_selected = st.selectbox("Select data augmentator:", options, help="Data agumentation to perform.")

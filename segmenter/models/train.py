@@ -20,7 +20,7 @@ from utils.argparser_utils import ChoiceArg, OptionalArg, PositionalArg, update_
 positional_args = [
     PositionalArg(
         name="corpus_tag",
-        help="Corpus tag. Example: persuasive_essays_paragraph",
+        help="Corpus tag. Example: cdcp",
         type=str
     ),
     PositionalArg(

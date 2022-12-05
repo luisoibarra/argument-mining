@@ -5,9 +5,11 @@
 - Project corpus between langauges.
   - Projecting a corpus is a technique that creates corpus from a source language (mostly english) to a target language.
 - Extract and classify arguments and relations from unnanotated text.
+  - Using tensorflow models to perform the tasks
 - Scrap the web.
   - Contains spiders to scrap Granma newspaper, the sections of `Printed Press` and `Letters to Management`
 - Visualize and modify the classified arguments and relations
+  - Streamlit app to easly manage the tasks of training, projecting and infering.
   - Brat annotation tool is used to view and correct annotations
 
 Go [here](https://github.com/luisoibarra/thesis) for more information about the models.
@@ -18,9 +20,7 @@ Some tools are missing from the release and need to be installed. Go to `scripts
 
 ### Colab
 
-A working example in [Colab](https://colab.research.google.com/drive/1iCVAoVXXtsgnHddjoVyXUPrLcNgYok1Z?usp=sharing).
-
-Or open **ArgumentMiningColab.ipynb** with Colab.
+A working example in [Colab](https://colab.research.google.com/drive/1iCVAoVXXtsgnHddjoVyXUPrLcNgYok1Z?usp=sharing) or open the `ArgumentMiningColab.ipynb` in Colab.
 
 ### Local
 
@@ -63,7 +63,7 @@ Some python modules are generated from jupyter notebooks. **Never** touch this m
 
 ### Training
 
-This package doesn't come with trained models. To train the models the repository comes with a [corpus](https://tudatalib.ulb.tu-darmstadt.de/handle/tudatalib/2422) splitted in train, dev and test, also a much smaller dataset is present just to quickly verify that all is in order. To change dataset in the notebooks change the `INFO_TAG` variable to the corpus name.
+This package doesn't come with trained models. To train the models the repository comes with several corpora splitted in train, dev and test, also a much smaller dataset is present just to quickly verify that all is in order. To change dataset in the notebooks change the `INFO_TAG` variable to the corpus name.
 
 1. Go to `scripts/` and run `./process_paragraph_corpus.sh persuasive_essays_paragraph` to create the corpus projection.
 2. Train segmenter model:
@@ -138,7 +138,7 @@ This [directory](pos_tagger/README.md) contains the algorithms to perform the PO
 
 ### Streamlit app
 
-This [directory](pos_tagger/README.md) contains the streamlit app implementation.
+This [directory](streamlit_app/README.md) contains the streamlit app implementation.
 
 ## Data Visualization
 

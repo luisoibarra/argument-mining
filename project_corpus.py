@@ -42,7 +42,13 @@ choice_args = choice_args_corpus_parser \
             help="Intermediate language used for data augmentation. Shouldn't be the same language of the corpus",
             type=str,
             values=('spanish', None, 'english', 'french') # Other languages can be added as long is supported by the translator
-        )
+        ),
+        ChoiceArg(
+            name="text_processor", 
+            help="What package to use when processing text.",
+            type=str,
+            values=('nltk', 'spacy')
+        ),
     ]
 
 optional_args = list(set(optional_args_corpus_parser + optional_args_sentence_aligner + optional_args_alginer + optional_args_projector))
@@ -75,7 +81,7 @@ if __name__ == "__main__":
         kwargs['middle_language'] = args.middle_language
         data_augmentator = TranslateDataAugmentator()
 
-    kwargs["use_spacy"] = True
+    kwargs["use_spacy"] = args.text_processor == "spacy"
 
     full_corpus_processing_pipeline(
         args.source_path,
