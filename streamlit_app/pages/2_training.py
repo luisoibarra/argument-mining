@@ -15,12 +15,16 @@ segmenter_file = ex.file_uploader("Upload segmenter model", "zip", help="Upload 
 if segmenter_file is not None and ex.button("Extract segmenter"):
     zip_file = ZipFile(segmenter_file)
     zip_file.extractall(data_path / "segmenter_corpus")
+    segmenter_file.close()
+    zip_file.close()
     del zip_file
     del segmenter_file
 link_predictor_file = ex.file_uploader("Upload link predictor model", "zip", help="Upload a zip file containing the trained link predictor models. The file must be the link predictor zip downloaded from colab.")
 if link_predictor_file is not None and ex.button("Extract link predictor"):
     zip_file = ZipFile(link_predictor_file)
     zip_file.extractall(data_path / "link_prediction")
+    link_predictor_file.close()
+    zip_file.close()
     del zip_file
     del link_predictor_file
 

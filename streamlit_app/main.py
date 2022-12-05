@@ -147,7 +147,7 @@ if input_format == "text":
             st.download_button("Download annotations", zipstr, "file.zip")
 elif input_format == "files":
     zip_file = None
-    file = st.file_uploader("Upload file:", ["zip"], help="Upload zip file containing the files to analyze in .txt format.")
+    file = st.file_uploader("Upload file with texts to process:", ["zip"], help="Upload zip file containing the files to analyze in .txt format.")
     if file is not None:
         zip_file = ZipFile(file)
         for info in zip_file.infolist():

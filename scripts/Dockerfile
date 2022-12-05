@@ -7,7 +7,7 @@ COPY ./install_nltk_resources.sh ./install_nltk_resources.sh
 
 RUN pip install tensorflow-addons \
  && pip install nltk && python -m nltk.downloader popular \
- && chmod 777 install_nltk_resources.sh && ./install_nltk_resources.sh && mv es-ancora.map ~/nltk_data/taggers/universal_tagset/es-ancora.map \
+ && chmod 777 install_nltk_resources.sh && ./install_nltk_resources.sh noancora && mv es-ancora.map ~/nltk_data/taggers/universal_tagset/es-ancora.map \
  && pip install pandas \
  && pip install scikit-learn \
  && pip install deep-translator \
