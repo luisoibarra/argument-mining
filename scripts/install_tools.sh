@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "Downloading GloVe files"
 ./download_glove_embeddings.sh
 

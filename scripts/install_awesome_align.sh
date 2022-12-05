@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Install and build awesome-align
 
 git clone https://github.com/neulab/awesome-align ./../aligner/awesome-align

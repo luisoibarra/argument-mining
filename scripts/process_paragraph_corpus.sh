@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # The corpus path must contain 3 folders named "dev", "train" and "test"
 # this folders must contain annotated conll files
 

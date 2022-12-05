@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # Download spanish word embeddings
 # Extracted from https://github.com/dccuchile/spanish-word-embeddings

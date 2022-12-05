@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # The corpus path must contain 3 files called "dev.conll", "train.conll" and "test.conll"
 # containing the sentences separated by an empty line
 

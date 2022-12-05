@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Install and build fast_align
 
 git clone https://github.com/clab/fast_align ./../aligner/fast_align
