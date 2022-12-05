@@ -19,12 +19,12 @@ def parse_corpus_pipeline(corpus_dir: Path, parsed_corpus_dest_dir: Path, corpus
     corpus_parser: Parser used to parse the files in `corpus_dir`
     """
     
-    log.info("Parsing directory", corpus_dir)
+    log.info(f"Parsing directory {str(corpus_dir)}")
     dataframe_representation = corpus_parser.parse_dir(corpus_dir, **kwargs)
 
     conll = ConllParser(**kwargs)
 
-    log.info("Exporting to", parsed_corpus_dest_dir)
+    log.info(f"Exporting to {str(parsed_corpus_dest_dir)}")
     conll.export_from_dataframes(parsed_corpus_dest_dir, dataframe_representation)
 
 def make_alignemnts_pipeline(

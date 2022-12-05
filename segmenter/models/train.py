@@ -41,7 +41,7 @@ choice_args = [
         name="create_corpus",
         help="If the corpus must be created",
         type=str,
-        values=("yes", "no")
+        values=("no", "yes")
     ),
 ]
 
