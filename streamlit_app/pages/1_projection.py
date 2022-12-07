@@ -51,7 +51,7 @@ else:
 
 # Select corpus
 corpus_dir = data_path / "corpus"
-options = [path.name for path in corpus_dir.iterdir() if path.is_dir() and path.name[0] != "_"]
+options = sorted([path.name for path in corpus_dir.iterdir() if path.is_dir() and path.name[0] != "_"], key=lambda x: "" if x == "cdcp" else x)
 corpus_name = st.selectbox("Corpus selection:", options, help="Select the corpus to project. The folder should be at data/corpus and contain dev, test and train folders")
 
 options = ["english"]

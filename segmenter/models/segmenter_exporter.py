@@ -198,21 +198,21 @@ def export(conll_file: Path, dest_sentence_file: Path, dest_tag_file: Path, dest
     dest_sentence_file.write_text(text)
     dest_tag_file.write_text("\n".join(" ".join(tags) for tags in dest_tag_content))
 
-def export_vocabs(base_path: Path, all_words: set, all_chars: set, all_tags: set, all_pos: set):
+def export_vocabs(base_path: Path, all_words: set, all_chars: set, all_tags: set, all_pos: set, language: str):
     
-    with (base_path / 'vocab.words.txt').open('w') as f:
+    with (base_path / f'{language}_vocab.words.txt').open('w') as f:
         for w in sorted(all_words):
             if w:
                 f.write(f'{w}\n')
-    with (base_path / 'vocab.chars.txt').open('w') as f:
+    with (base_path / f'{language}_vocab.chars.txt').open('w') as f:
         for w in sorted(all_chars):
             if w:
                 f.write(f'{w}\n')
-    with (base_path / 'vocab.tags.txt').open('w') as f:
+    with (base_path / f'{language}_vocab.tags.txt').open('w') as f:
         for w in sorted(all_tags):
             if w:
                 f.write(f'{w}\n')
-    with (base_path / 'vocab.pos.txt').open('w') as f:
+    with (base_path / f'{language}_vocab.pos.txt').open('w') as f:
         for w in sorted(all_pos):
             if w:
                 f.write(f'{w}\n')
@@ -287,27 +287,27 @@ def export_files(data_dir: Path, dest_dir: Path, language: str, meta_tags_level:
     
     # Train Block
     train_file = data_dir / "train.conll"
-    train_dest_sent_file = dest_dir / "train.words.txt"
-    train_dest_tag_file = dest_dir / "train.tags.txt"
-    train_dest_pos_file = dest_dir / "train.pos.txt"
+    train_dest_sent_file = dest_dir / f"{language}_train.words.txt"
+    train_dest_tag_file = dest_dir / f"{language}_train.tags.txt"
+    train_dest_pos_file = dest_dir / f"{language}_train.pos.txt"
     export(train_file, train_dest_sent_file, train_dest_tag_file, train_dest_pos_file, all_words, all_tags, all_pos, all_chars, language, meta_tags_level, meta_tag_separator, use_sentence_split=True, use_nltk=False, spacy_pos=spacy_pos)
 
     # Test Block
     testa_file = data_dir / "test.conll"
-    testa_dest_sent_file = dest_dir / "testa.words.txt"
-    testa_dest_tag_file = dest_dir / "testa.tags.txt"
-    testa_dest_pos_file = dest_dir / "testa.pos.txt"
+    testa_dest_sent_file = dest_dir / f"{language}_testa.words.txt"
+    testa_dest_tag_file = dest_dir / f"{language}_testa.tags.txt"
+    testa_dest_pos_file = dest_dir / f"{language}_testa.pos.txt"
     export(testa_file, testa_dest_sent_file, testa_dest_tag_file, testa_dest_pos_file, all_words, all_tags, all_pos, all_chars, language, meta_tags_level, meta_tag_separator, use_sentence_split=True, use_nltk=False, spacy_pos=spacy_pos)
 
     # Validation Block
     testb_file = data_dir / "dev.conll"
-    testb_dest_sent_file = dest_dir / "testb.words.txt"
-    testb_dest_tag_file = dest_dir / "testb.tags.txt"
-    testb_dest_pos_file = dest_dir / "testb.pos.txt"
+    testb_dest_sent_file = dest_dir / f"{language}_testb.words.txt"
+    testb_dest_tag_file = dest_dir / f"{language}_testb.tags.txt"
+    testb_dest_pos_file = dest_dir / f"{language}_testb.pos.txt"
     export(testb_file, testb_dest_sent_file, testb_dest_tag_file, testb_dest_pos_file, all_words, all_tags, all_pos, all_chars, language, meta_tags_level, meta_tag_separator, use_sentence_split=True, use_nltk=False, spacy_pos=spacy_pos)
 
     # Export vocabularies
-    export_vocabs(dest_dir, all_words, all_chars, all_tags)
+    export_vocabs(dest_dir, all_words, all_chars, all_tags, language)
 
 def export_directory(data_dir: Path, dest_dir: Path, language: str, meta_tags_level: int, meta_tag_separator="-", only_train=True, spacy_pos=True):
     """
@@ -330,14 +330,14 @@ def export_directory(data_dir: Path, dest_dir: Path, language: str, meta_tags_le
     
     dest_dir.mkdir(parents=True, exist_ok=True)
 
-    testb_sent_file = dest_dir / "testb.words.txt"
-    testb_tag_file = dest_dir / "testb.tags.txt"
-    testb_pos_file = dest_dir / "testb.pos.txt"
+    testb_sent_file = dest_dir / f"{language}_testb.words.txt"
+    testb_tag_file = dest_dir / f"{language}_testb.tags.txt"
+    testb_pos_file = dest_dir / f"{language}_testb.pos.txt"
     export_from_directory(data_dir / "dev", testb_sent_file, testb_tag_file, testb_pos_file, all_words, all_tags, all_chars, all_pos, language, meta_tags_level, meta_tag_separator, spacy_pos=spacy_pos)
     
-    testa_sent_file = dest_dir / "testa.words.txt"
-    testa_tag_file = dest_dir / "testa.tags.txt"
-    testa_pos_file = dest_dir / "testa.pos.txt"
+    testa_sent_file = dest_dir / f"{language}_testa.words.txt"
+    testa_tag_file = dest_dir / f"{language}_testa.tags.txt"
+    testa_pos_file = dest_dir / f"{language}_testa.pos.txt"
     export_from_directory(data_dir / "test", testa_sent_file, testa_tag_file, testa_pos_file, all_words, all_tags, all_chars, all_pos, language, meta_tags_level, meta_tag_separator, spacy_pos=spacy_pos)
 
     if only_train:
@@ -345,13 +345,13 @@ def export_directory(data_dir: Path, dest_dir: Path, language: str, meta_tags_le
         all_tags = set()
         all_chars = set()
 
-    train_sent_file = dest_dir / "train.words.txt"
-    train_tag_file = dest_dir / "train.tags.txt"
-    train_pos_file = dest_dir / "train.pos.txt"
+    train_sent_file = dest_dir / f"{language}_train.words.txt"
+    train_tag_file = dest_dir / f"{language}_train.tags.txt"
+    train_pos_file = dest_dir / f"{language}_train.pos.txt"
     export_from_directory(data_dir / "train", train_sent_file, train_tag_file, train_pos_file, all_words, all_tags, all_chars, all_pos, language, meta_tags_level, meta_tag_separator, spacy_pos=spacy_pos)
 
     # Export vocabularies
-    export_vocabs(dest_dir, all_words, all_chars, all_tags, all_pos)
+    export_vocabs(dest_dir, all_words, all_chars, all_tags, all_pos, language)
 
 if __name__ == "__main__":
 
