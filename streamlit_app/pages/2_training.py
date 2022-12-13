@@ -46,7 +46,7 @@ epochs = st.slider("Epochs segmenter", 1, 120, 100, step=1)
 # use_norm = st.checkbox("Use normalization", True)
 # use_dense = st.checkbox("Use final dense layer", True)
 
-if Path(data_path, "segmenter_corpus", corpus_name, "paragraph_pos_model_cnn_lstm_blstm_resnet_norm_dn_lower_crf").exists():
+if Path(data_path, "segmenter_corpus", corpus_name, f"{corpus_language}_pos_model_cnn_lstm_blstm_resnet_norm_dn_lower_crf").exists():
     st.info("Segmenter exists.")
 if st.button("Train segmenter"):
     with st.spinner("Training segmenter ..."):
@@ -105,7 +105,7 @@ epochs = st.slider("Epochs link predictor", 1, 120, 70, step=1)
 # patience = st.slider("Patience", 0, 20, 5, step=1)
 # return_best = st.checkbox("Return best", False)
 
-if Path(data_path, "link_prediction", corpus_name, "model_0.003_10_0.1_5_False").exists():
+if Path(data_path, "link_prediction", corpus_name, f"{corpus_language}_model_0.003_10_0.1_5_False").exists():
     st.info("Link predictor exists.")
 if st.button("Train link predictor"):
     with st.spinner("Training link predictor ..."):

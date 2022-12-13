@@ -147,3 +147,7 @@ The tool use for visualization and correction is [brat rapid annotation tool (br
 The data must be in `brat/data/` to the program to see it and in a brat format. It can be export from `main.ipynb`.
 
 ![Brat Visualization Tool](doc/images/brat_screenshot.png)
+
+### Granma Letters to Management
+
+The final annotated letters are in `brat_granma_letters_cdcp.zip`. Unzip this file in brat/data/ to see the argumentative structures.
